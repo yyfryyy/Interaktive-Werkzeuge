@@ -6,7 +6,8 @@ class Widget {
   color col = 50;
   int cornerRadius = 10;
   String title;
-  
+
+
   Widget(int x_,int y_, int breite_, int hoehe_, color col_, String title_) {
   
     x = x_;
@@ -15,6 +16,7 @@ class Widget {
     hoehe = hoehe_;
     col = col_;
     title = title_;
+
   } 
 
   Widget(int x_,int y_, int breite_, int hoehe_, String title_) {
@@ -34,11 +36,10 @@ class Widget {
     noStroke();
     rect(x,y,breite,hoehe, cornerRadius);
     fill(255);
-    textFont(SFproBold);
-    textSize(24);
-    text(title,x+50,y+40);
+    textFont(SFproBold_24);
+    text(title,x+50,y+38);
     
     popStyle();
-    
+
   }
 }
