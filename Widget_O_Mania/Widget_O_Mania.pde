@@ -50,8 +50,8 @@ Uhr uhr;
 
 void setup() {
  fullScreen();
- pixelDensity(displayDensity());
  //size(800,600);
+ pixelDensity(displayDensity());
  //frame.setResizable(true);
  
  SFproBold_48 = loadFont("SFProDisplay-Bold-48.vlw");
@@ -110,7 +110,7 @@ void setup() {
 void draw() {
  background(155);
  //println(frameRate);
- 
+ text("Fps: "+ frameRate,20,20);
  uhr.updateClock();
 
  

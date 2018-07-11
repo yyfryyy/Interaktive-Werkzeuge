@@ -44,12 +44,12 @@ class Uhr {
     
     uhrzeit = nf(std,2)+":"+nf(min,2)+":"+nf(sec,2);
     textAlign(CENTER);
-    textFont(Quartz_150);
-
-    fill(40);
-    text("00:00:00",x,y+40);
+    //textFont(Quartz_150);
+    textSize(120);
+    //fill(40);
+    //text("00:00:00",x,y+40);
     fill(255);
-    text(uhrzeit,x,y+40);
+    text(uhrzeit,x,y+30);
     popStyle();
     //println(uhrzeit);
     showDate(x,y+90);
@@ -177,6 +177,7 @@ class switchButton extends Button {
     noStroke();
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text White
+    textFont(SFproBold_24);
     textSize(14);
     
     fill(255);
@@ -191,6 +192,7 @@ class switchButton extends Button {
     noStroke();
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text Dark
+    textFont(SFproBold_24);
     textSize(14);
     fill(0);
     text(switchText,x+breite/2+5,y+hoehe/2+6);
