@@ -52,8 +52,8 @@ class IconButton extends Button {
   PImage displayedIcon;
   
   int resizeFactor = 10;
-  color col = 50;
-  color hoverCol = 80;
+  color col = 70;
+  color hoverCol = 100;
   
   IconButton (int x_,int y_, int breite_, int hoehe_, PImage icon_) {
     x = x_;

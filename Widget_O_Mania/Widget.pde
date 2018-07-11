@@ -35,10 +35,11 @@ class Widget {
     fill(col);
     noStroke();
     rect(x,y,breite,hoehe, cornerRadius);
+    //fill(col+20);
+    //rect(x,y,breite,60);
     fill(255);
     textFont(SFproBold_24);
     text(title,x+50,y+38);
-    
     popStyle();
 
   }
