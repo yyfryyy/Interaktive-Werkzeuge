@@ -32,15 +32,23 @@ void MainScreen() {
  maxButtonWetter = new IconButton(wetter.x+15,wetter.y+15,30,30, maxIcon, minIcon,3);
  maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
+ 
+ uhrSwitch = new switchButton(wecker.x+wecker.breite-160,wecker.y+70,100,50,clock,"09:00");
+ 
  //==============================================
    init = true;
  } 
    //============Draw Wecker=======================
  wecker.display();
  maxButtonWecker.display();
- 
+  
+  if (!uhrSwitch.active) {
   uhr.digital();
-  //uhr.analog();
+  }
+  else {
+  uhr.analog();
+  }
+  uhrSwitch.display();
  //==============================================
  
  //============Draw Radio=======================

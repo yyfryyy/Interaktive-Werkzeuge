@@ -8,8 +8,13 @@ int screenNo = 0;
 
 PImage maxIcon;
 PImage minIcon;
+PImage clockIconWhite;
+PImage clockIconDark;
+
+PShape clock;
 
 boolean init;
+boolean clockActive;
 
 Widget wecker;
 Widget radio;
@@ -33,6 +38,8 @@ IconButton minButtonWecker;
 IconButton minButtonRadio;
 IconButton minButtonWetter;
 
+switchButton uhrSwitch;
+
 Uhr uhr;
 
 void setup() {
@@ -48,6 +55,10 @@ void setup() {
  
  maxIcon = loadImage("fullscreen.png");
  minIcon = loadImage("minimize.png");
+ clockIconWhite = loadImage("clock_white.png");
+ clockIconDark = loadImage("clock_dark.png");
+ 
+ clock = loadShape("clock.svg");
  
  //=============Setup Wecker=====================
  wecker = new Widget(50,40,width/2-75,height/2-60,"Uhr");
@@ -112,12 +123,14 @@ void draw() {
 }
 
 void mouseReleased() {
-  init = false;
+
   // Main
   if (screenNo == 0) {
   maxButtonWecker.clicked("changeScreen");
   maxButtonRadio.clicked("changeScreen");
   maxButtonWetter.clicked("changeScreen");
+  
+  uhrSwitch.clicked("switchState");
   }
   // Wecker
   if (screenNo == 1) {

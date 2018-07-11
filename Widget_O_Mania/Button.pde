@@ -8,7 +8,7 @@ class Button {
   boolean hovered;
   int cornerRadius = 5;
   int targetScreen;
-  
+  boolean active;  
 
   
   void isHovered() {
@@ -36,12 +36,21 @@ class Button {
       if (function == "changeScreen") {
         changeScreen();
       }
+      if (function == "switchState") {
+        switchState();
+      }
     }
   }
   
   void changeScreen() {
     screenNo = targetScreen;
+    init = false;
     hovered = false;
+  }
+  
+  void switchState() {
+    active = !active;
+    clockActive = active;
   }
   
 }

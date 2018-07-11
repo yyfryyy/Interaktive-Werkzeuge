@@ -43,9 +43,9 @@ class Uhr {
     textFont(Quartz_150);
 
     fill(40);
-    text("00:00:00",x,y);
+    text("00:00:00",x,y+40);
     fill(255);
-    text(uhrzeit,x,y);
+    text(uhrzeit,x,y+40);
     popStyle();
     //println(uhrzeit);
   }
@@ -101,12 +101,81 @@ class Uhr {
     strokeWeight(3);
     stroke(255,0,0);
     fill(255,0,0);
+    ellipse(0,0,8,8);
     line(0,0,radius*0.7*cos(angleSec),radius*0.7*sin(angleSec));
     line(0,0,-radius*0.2*cos(angleSec),-radius*0.2*sin(angleSec));
     ellipse(radius*0.7*cos(angleSec),radius*0.7*sin(angleSec),20,20);
     
     popStyle();
     popMatrix();
+  }
+
+
+}
+
+class switchButton extends Button {
+  
+  PShape icon;
+  PShape icon2;
+  String switchText;
+  
+  switchButton(int x_,int y_, int breite_, int hoehe_, PShape icon_, PShape icon2_) {
+    x = x_;
+    y = y_;
+    breite = breite_;
+    hoehe = hoehe_;
+    active = clockActive;
+    icon = icon_;
+    icon2 = icon_;
+  }
+  
+  switchButton(int x_,int y_, int breite_, int hoehe_, PShape icon_, String text_) {
+    x = x_;
+    y = y_;
+    breite = breite_;
+    hoehe = hoehe_;
+    active = clockActive;
+    icon = icon_;
+    switchText = text_;
+  }
+  
+  void display() {
+    pushStyle();
+    rectMode(CORNER);
+    fill(35);
+    stroke(255);
+    isHovered();
+    strokeWeight(3);
+    rect(x,y,breite,hoehe,10);
+    fill(255);
+
+    if (active) {
+    // Linke Füllung
+    rect(x,y,breite/2,hoehe,10,0,0,10);
+    // Clock dark
+    icon.disableStyle();
+    fill(0);
+    noStroke();
+    shape(icon,x+6,y+6,hoehe-12,hoehe-12);
+    // Text White
+    textSize(14);
+    fill(255);
+    text(switchText,x+breite/2+5,y+hoehe/2+6);
+    }
+    else {
+    // Rechte Füllung
+    rect(x+breite/2,y,breite/2,hoehe,0,10,10,0);
+    // Clock white
+    icon.disableStyle();
+    fill(255);
+    noStroke();
+    shape(icon,x+6,y+6,hoehe-12,hoehe-12);
+    // Text Dark
+    textSize(14);
+    fill(0);
+    text(switchText,x+breite/2+5,y+hoehe/2+6);
+    }
+    popStyle();
   }
 
 
