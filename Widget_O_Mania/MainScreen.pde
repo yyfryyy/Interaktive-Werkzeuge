@@ -42,7 +42,7 @@ void MainScreen() {
  wecker.display();
  maxButtonWecker.display();
   
-  if (!uhrSwitch.active) {
+  if (uhrSwitch.active) {
   uhr.digital();
   }
   else {

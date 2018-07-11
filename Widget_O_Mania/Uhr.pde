@@ -13,6 +13,7 @@ class Uhr {
   int day;
   int month;
   int year;
+  String tagesname;
   
   int x;
   int y;
@@ -33,6 +34,9 @@ class Uhr {
     day = day();
     month = month();
     year = year();
+    
+    tagesname = new SimpleDateFormat("EEEE").format(new Date());
+    println(tagesname);
   }
   
   void digital() {
@@ -48,6 +52,7 @@ class Uhr {
     text(uhrzeit,x,y+40);
     popStyle();
     //println(uhrzeit);
+    showDate(x,y+90);
   }
   
   void analog() {
@@ -108,8 +113,20 @@ class Uhr {
     
     popStyle();
     popMatrix();
+    
+    showDate(x,y+120);
   }
 
+  void showDate(int xOff, int yOff) {
+    pushStyle();
+    textFont(SFproLight_24);
+    fill(255);
+    String datum = tagesname +" der, " +nf(day,2)+"."+nf(month,2)+"."+nf(year,4);
+    //println(datum);
+    textAlign(CENTER);
+    text(datum,xOff,yOff);
+    popStyle();
+  }
 
 }
 
@@ -142,16 +159,18 @@ class switchButton extends Button {
   void display() {
     pushStyle();
     rectMode(CORNER);
-    fill(35);
     stroke(255);
+    noFill();
     isHovered();
     strokeWeight(3);
     rect(x,y,breite,hoehe,10);
     fill(255);
 
-    if (active) {
+    if (!active) {
+
     // Linke Füllung
     rect(x,y,breite/2,hoehe,10,0,0,10);
+    
     // Clock dark
     icon.disableStyle();
     fill(0);
@@ -159,6 +178,7 @@ class switchButton extends Button {
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text White
     textSize(14);
+    
     fill(255);
     text(switchText,x+breite/2+5,y+hoehe/2+6);
     }
@@ -177,6 +197,8 @@ class switchButton extends Button {
     }
     popStyle();
   }
+  
+
 
 
 }

@@ -1,5 +1,11 @@
+import java.util.*;
+import java.text.SimpleDateFormat;
+
+
 PFont SFproBold_48;
 PFont SFproBold_24;
+PFont SFproLight_24;
+
 PFont Quartz_48;
 PFont Quartz_80;
 PFont Quartz_150;
@@ -44,11 +50,14 @@ Uhr uhr;
 
 void setup() {
  fullScreen();
+ pixelDensity(displayDensity());
  //size(800,600);
  //frame.setResizable(true);
  
  SFproBold_48 = loadFont("SFProDisplay-Bold-48.vlw");
  SFproBold_24 = loadFont("SFProDisplay-Bold-24.vlw");
+ SFproLight_24 = loadFont("SFproLight_24.vlw");
+ 
  Quartz_48 = loadFont("DigitalDismay-48.vlw");
  Quartz_80 = loadFont("DigitalDismay-80.vlw");
  Quartz_150 = loadFont("DigitalDismay-150.vlw");
@@ -100,7 +109,7 @@ void setup() {
 
 void draw() {
  background(155);
- println(frameRate);
+ //println(frameRate);
  
  uhr.updateClock();
 
