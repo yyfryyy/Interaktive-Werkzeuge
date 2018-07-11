@@ -9,10 +9,24 @@ PImage minIcon;
 Widget wecker;
 Widget radio;
 Widget wetter;
+Widget weckerMax;
+Widget radioMax;
+Widget wetterMax;
+Widget weckerMin;
+Widget radioMin;
+Widget wetterMin;
 
 IconButton maxButtonWecker;
 IconButton maxButtonRadio;
 IconButton maxButtonWetter;
+
+IconButton maxButtonWeckerSmall;
+IconButton maxButtonRadioSmall;
+IconButton maxButtonWetterSmall;
+
+IconButton minButtonWecker;
+IconButton minButtonRadio;
+IconButton minButtonWetter;
 
 void setup() {
  //fullScreen();
@@ -26,23 +40,38 @@ void setup() {
  
  //=============Setup Wecker=====================
  wecker = new Widget(50,40,width/2-75,height/2-60,"Wecker");
+ weckerMax = new Widget(50,40,width-100,height-200,"Wecker"); 
+ weckerMin = new Widget(50,height-150,width/2-75,100,"Wecker");
+ 
  maxButtonWecker = new IconButton(wecker.x+15,wecker.y+15,30,30, maxIcon,minIcon,1);
+ maxButtonWeckerSmall = new IconButton(weckerMin.x+15,weckerMin.y+15,30,30, maxIcon,minIcon,1);
+ minButtonWecker = new IconButton(weckerMax.x+15,weckerMax.y+15,30,30, minIcon,maxIcon,0);
  //==============================================
  
   //=============Setup Radio=====================
- radio = new Widget(50,height/2+10,width/2-75,height/2-50,"Radio");
+ radio = new Widget(50,height/2+30,width/2-75,height/2-70,"Radio");
+ radioMax = new Widget(50,40,width-100,height-200,"Radio");
+ radioMin = new Widget(50,height-150,width/2-75,100,"Radio");
+ 
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
+ maxButtonRadioSmall = new IconButton(radioMin.x+15,radioMin.y+15,30,30, maxIcon,minIcon,2);
+ minButtonRadio = new IconButton(radioMax.x+15,radioMax.y+15,30,30, minIcon,maxIcon,0);
  //==============================================
  
    //=============Setup Wetter=====================
  wetter = new Widget(width/2+25,40,width/2-75,height-80,"Wetter");
+ wetterMax = new Widget(50,40,width-100,height-200,"Wetter");
+ wetterMin = new Widget(50,height-150,width/2-75,100,"Wetter");
+ 
  maxButtonWetter = new IconButton(wetter.x+15,wetter.y+15,30,30, maxIcon, minIcon,3);
+ maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
+ minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
  //==============================================
 }
 
 void draw() {
  background(155);
-
+ println(frameRate);
  switch(screenNo) {
    case 0:
    MainScreen();
@@ -61,9 +90,30 @@ void draw() {
 }
 
 void mouseReleased() {
+  // Main
+  if (screenNo == 0) {
   maxButtonWecker.clicked("changeScreen");
   maxButtonRadio.clicked("changeScreen");
   maxButtonWetter.clicked("changeScreen");
+  }
+  // Wecker
+  if (screenNo == 1) {
+  minButtonWecker.clicked("changeScreen");
+  maxButtonRadioSmall.clicked("changeScreen");
+  maxButtonWetterSmall.clicked("changeScreen");
+  }
+  // Radio
+  if (screenNo == 2) {
+  maxButtonWeckerSmall.clicked("changeScreen");
+  minButtonRadio.clicked("changeScreen");
+  maxButtonWetterSmall.clicked("changeScreen");
+  }
+  // Wetter
+    if (screenNo == 3) {
+  maxButtonWeckerSmall.clicked("changeScreen");
+  maxButtonRadioSmall.clicked("changeScreen");
+  minButtonWetter.clicked("changeScreen");
+  }
 }
 
 

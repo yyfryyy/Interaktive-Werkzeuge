@@ -41,6 +41,7 @@ class Button {
   
   void changeScreen() {
     screenNo = targetScreen;
+    hovered = false;
   }
   
 }

@@ -4,7 +4,7 @@ class Widget {
   int breite;
   int hoehe;
   color col = 50;
-  int cornerRadius = 10;
+  int cornerRadius = 0;
   String title;
 
 
@@ -42,4 +42,6 @@ class Widget {
     popStyle();
 
   }
+  
+
 }
