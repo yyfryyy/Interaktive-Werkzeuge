@@ -42,4 +42,17 @@ class Widget {
     popStyle();
 
   }
+  
+  void displayMax() {
+    pushStyle();
+    
+    fill(col);
+    noStroke();
+    rect(50,40,width-100,height-100, cornerRadius);
+    fill(255);
+    textFont(SFproBold_24);
+    text(title,50+50,40+38);
+    
+    popStyle();
+  }
 }
