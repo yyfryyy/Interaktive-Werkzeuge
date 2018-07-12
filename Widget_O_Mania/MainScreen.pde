@@ -38,7 +38,10 @@ void MainScreen() {
  //==============================================
    init = true;
  } 
-   //============Draw Wecker=======================
+ 
+ 
+ 
+   //============Draw Uhr=======================
  wecker.display();
  maxButtonWecker.display();
   
@@ -51,8 +54,13 @@ void MainScreen() {
   uhrSwitch.display();
  //==============================================
  
+ 
+ 
+ 
  //============Draw Radio=======================
  radio.display();
+ 
+ 
  maxButtonRadio.display();
  //==============================================
  

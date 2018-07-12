@@ -1,0 +1,22 @@
+{
+  "radioJSON": {
+    "senderliste": [
+      {
+        "name": "SWR3",
+        "songs": [
+          "Greta Van Fleet – 01. Highway Tune.mp3",
+          "Oasis - MTV Unplugged 1996 – Whatever.mp3",
+          "Liquido – Narcotic (Long Version).mp3"
+        ]
+      },
+      {
+        "name": "Hitradio Ohr",
+        "songs": [
+          "Fiddler's Green – Victor And His Demons.mp3",
+          "Die Ärzte – Schrei Nach Liebe.mp3",
+          "Greta Van Fleet – 02. Safari Song.mp3"
+        ]
+      }
+    ]
+  }
+}

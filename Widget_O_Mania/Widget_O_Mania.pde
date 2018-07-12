@@ -1,6 +1,19 @@
 import java.util.*;
 import java.text.SimpleDateFormat;
+import ddf.minim.*;
 
+Minim minim;
+AudioPlayer player;
+AudioMetaData meta;
+
+JSONObject radioSenderJSON;
+JSONObject radiosender;
+JSONArray senderArray;
+JSONArray playlist;
+String song;
+JSONObject sender;
+String radioName;
+int songIndex;
 
 PFont SFproBold_48;
 PFont SFproBold_24;
@@ -48,11 +61,35 @@ switchButton uhrSwitch;
 
 Uhr uhr;
 
+
+
 void setup() {
- fullScreen();
- //size(800,600);
+ //fullScreen();
+ size(800,600);
  pixelDensity(displayDensity());
  //frame.setResizable(true);
+ 
+ //Minim & Radiosender
+ minim = new Minim(this);
+ //player = minim.loadFile("http://swr-swr3-live.cast.addradio.de/swr/swr3/live/mp3/128/stream.mp3");
+ radioSenderJSON = loadJSONObject("radiosender.json");
+ radiosender = radioSenderJSON.getJSONObject("radioJSON");
+ senderArray = radiosender.getJSONArray("senderliste");
+ sender = senderArray.getJSONObject(floor(random(2)));
+ radioName = sender.getString("name");
+ playlist = sender.getJSONArray("songs");
+ songIndex = floor(random(3));
+ println(songIndex);
+ song = playlist.getString(songIndex);
+ 
+ 
+ player = minim.loadFile(song);
+ meta = player.getMetaData();
+ player.play();
+ println(radioName);
+ println("Song: " + meta.title());
+ println("Artist: " + meta.author());
+ println("Album: " + meta.album());
  
  SFproBold_48 = loadFont("SFProDisplay-Bold-48.vlw");
  SFproBold_24 = loadFont("SFProDisplay-Bold-24.vlw");
@@ -112,7 +149,6 @@ void draw() {
  //println(frameRate);
  text("Fps: "+ frameRate,20,20);
  uhr.updateClock();
-
  
  switch(screenNo) {
    case 0:

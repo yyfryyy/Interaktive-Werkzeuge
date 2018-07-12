@@ -36,7 +36,7 @@ class Uhr {
     year = year();
     
     tagesname = new SimpleDateFormat("EEEE").format(new Date());
-    println(tagesname);
+    //println(tagesname);
   }
   
   void digital() {
