@@ -22,6 +22,8 @@ void MainScreen() {
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
  maxButtonRadioSmall = new IconButton(radioMin.x+15,radioMin.y+15,30,30, maxIcon,minIcon,2);
  minButtonRadio = new IconButton(radioMax.x+15,radioMax.y+15,30,30, minIcon,maxIcon,0);
+ 
+ radioSteuerung = new Radio(radio.x+radio.breite/2-50,radio.y+240);
  //==============================================
  
    //=============Setup Wetter=====================
@@ -61,7 +63,10 @@ void MainScreen() {
  radio.display();
  
  
+ 
+ 
  maxButtonRadio.display();
+ radioSteuerung.steuerungSmall();
  //==============================================
  
   //============Draw Wetter=======================

@@ -38,7 +38,8 @@ class Widget {
     //fill(col+20);
     //rect(x,y,breite,60);
     fill(255);
-    textFont(SFproBold_24);
+    textFont(SFproBold_128);
+    textSize(24);
     text(title,x+50,y+38);
     popStyle();
 

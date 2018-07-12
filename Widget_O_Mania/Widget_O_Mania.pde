@@ -14,23 +14,28 @@ String song;
 JSONObject sender;
 String radioName;
 int songIndex;
+int senderIndex;
 
-PFont SFproBold_48;
-PFont SFproBold_24;
-PFont SFproLight_24;
 
-PFont Quartz_48;
-PFont Quartz_80;
-PFont Quartz_150;
+PFont SFproBold_128;
+PFont SFproLight_128;
+PFont SFproSemiBold_128;
+
+PFont Quartz_128;
 
 int screenNo = 0;
 
-PImage maxIcon;
-PImage minIcon;
+
 PImage clockIconWhite;
 PImage clockIconDark;
 
+PShape maxIcon;
+PShape minIcon;
 PShape clock;
+PShape playIcon;
+PShape pauseIcon;
+PShape forwardIcon;
+PShape backwardIcon;
 
 boolean init;
 boolean clockActive;
@@ -59,48 +64,55 @@ IconButton minButtonWetter;
 
 switchButton uhrSwitch;
 
+Radio radioSteuerung;
+
 Uhr uhr;
 
 
 
 void setup() {
- //fullScreen();
- size(800,600);
+ fullScreen();
+ //size(800,600);
  pixelDensity(displayDensity());
+ //textMode(SHAPE);
  //frame.setResizable(true);
- 
+ String[] fontList = PFont.list();
+ printArray(fontList);
  //Minim & Radiosender
  minim = new Minim(this);
  //player = minim.loadFile("http://swr-swr3-live.cast.addradio.de/swr/swr3/live/mp3/128/stream.mp3");
  radioSenderJSON = loadJSONObject("radiosender.json");
  radiosender = radioSenderJSON.getJSONObject("radioJSON");
  senderArray = radiosender.getJSONArray("senderliste");
- sender = senderArray.getJSONObject(floor(random(2)));
+ sender = senderArray.getJSONObject(floor(random(senderArray.size())));
  radioName = sender.getString("name");
  playlist = sender.getJSONArray("songs");
- songIndex = floor(random(3));
+ songIndex = floor(random(playlist.size()));
  println(songIndex);
  song = playlist.getString(songIndex);
  
  
  player = minim.loadFile(song);
  meta = player.getMetaData();
- player.play();
  println(radioName);
  println("Song: " + meta.title());
  println("Artist: " + meta.author());
  println("Album: " + meta.album());
+ //player.play();
  
- SFproBold_48 = loadFont("SFProDisplay-Bold-48.vlw");
- SFproBold_24 = loadFont("SFProDisplay-Bold-24.vlw");
- SFproLight_24 = loadFont("SFproLight_24.vlw");
+ SFproBold_128 = createFont("SFProDisplay-Bold",128);
+ SFproLight_128 = createFont("SFProDisplay-Light",128);
+ SFproSemiBold_128 = createFont("SFProDisplay-Semibold",128);
  
- Quartz_48 = loadFont("DigitalDismay-48.vlw");
- Quartz_80 = loadFont("DigitalDismay-80.vlw");
- Quartz_150 = loadFont("DigitalDismay-150.vlw");
+ Quartz_128 = createFont("DigitalDismay",128);
+
+ playIcon = loadShape("play-button.svg");
+ pauseIcon = loadShape("pause-button.svg");
+ forwardIcon = loadShape("forward-button.svg");
+ backwardIcon = loadShape("backward-button.svg");
  
- maxIcon = loadImage("fullscreen.png");
- minIcon = loadImage("minimize.png");
+ maxIcon = loadShape("maximize.svg");
+ minIcon = loadShape("minimize.svg");
  clockIconWhite = loadImage("clock_white.png");
  clockIconDark = loadImage("clock_dark.png");
  
@@ -127,6 +139,8 @@ void setup() {
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
  maxButtonRadioSmall = new IconButton(radioMin.x+15,radioMin.y+15,30,30, maxIcon,minIcon,2);
  minButtonRadio = new IconButton(radioMax.x+15,radioMax.y+15,30,30, minIcon,maxIcon,0);
+ 
+ radioSteuerung = new Radio(200,200);
  //==============================================
  
    //=============Setup Wetter=====================
@@ -176,6 +190,10 @@ void mouseReleased() {
   maxButtonWetter.clicked("changeScreen");
   
   uhrSwitch.clicked("switchState");
+  
+  radioSteuerung.playButton.clicked("play/pause");
+  radioSteuerung.forwardButton.clicked("forward");
+  radioSteuerung.backwardButton.clicked("backward");
   }
   // Wecker
   if (screenNo == 1) {

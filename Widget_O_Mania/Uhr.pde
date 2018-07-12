@@ -44,10 +44,10 @@ class Uhr {
     
     uhrzeit = nf(std,2)+":"+nf(min,2)+":"+nf(sec,2);
     textAlign(CENTER);
-    //textFont(Quartz_150);
+    textFont(Quartz_128);
     textSize(120);
-    //fill(40);
-    //text("00:00:00",x,y+40);
+    fill(40);
+    text("00:00:00",x,y+30);
     fill(255);
     text(uhrzeit,x,y+30);
     popStyle();
@@ -119,7 +119,8 @@ class Uhr {
 
   void showDate(int xOff, int yOff) {
     pushStyle();
-    textFont(SFproLight_24);
+    textFont(SFproLight_128);
+    textSize(24);
     fill(255);
     String datum = tagesname +" der, " +nf(day,2)+"."+nf(month,2)+"."+nf(year,4);
     //println(datum);
@@ -177,7 +178,7 @@ class switchButton extends Button {
     noStroke();
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text White
-    textFont(SFproBold_24);
+    textFont(SFproBold_128);
     textSize(14);
     
     fill(255);
@@ -192,7 +193,7 @@ class switchButton extends Button {
     noStroke();
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text Dark
-    textFont(SFproBold_24);
+    textFont(SFproBold_128);
     textSize(14);
     fill(0);
     text(switchText,x+breite/2+5,y+hoehe/2+6);

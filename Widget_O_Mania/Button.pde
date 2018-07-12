@@ -39,6 +39,15 @@ class Button {
       if (function == "switchState") {
         switchState();
       }
+      if (function == "play/pause") {
+        playPause();
+      }
+      if (function == "forward") {
+        senderForward();
+      }
+      if (function == "backward") {
+        senderBackward();
+      }
     }
   }
   
@@ -53,18 +62,63 @@ class Button {
     clockActive = active;
   }
   
+  void playPause() {
+    if (player.isPlaying()) {
+      player.pause();
+    }
+    else {
+      player.play();
+    }
+    active = !active;
+  }
+  
+  void senderForward() {
+    player.pause();
+    senderIndex++;
+    if (senderIndex>senderArray.size()-1) {
+    senderIndex = 0;
+    }
+    //println(senderIndex);
+    sender = senderArray.getJSONObject(senderIndex);
+    playlist = sender.getJSONArray("songs");
+    songIndex = floor(random(playlist.size()));
+    song = playlist.getString(songIndex);
+    player = minim.loadFile(song);
+    meta = player.getMetaData();
+    if (radioSteuerung.playButton.active) {
+    player.play();
+    }
+  }
+  
+  void senderBackward() {
+    player.pause();
+    senderIndex--;
+    if (senderIndex<0) {
+    senderIndex = senderArray.size()-1;
+    }
+    //println(senderIndex);
+    sender = senderArray.getJSONObject(senderIndex);
+    playlist = sender.getJSONArray("songs");
+    songIndex = floor(random(playlist.size()));
+    song = playlist.getString(songIndex);
+    player = minim.loadFile(song);
+    meta = player.getMetaData();
+    if (radioSteuerung.playButton.active) {
+    player.play();
+    }
+  }
 }
 
 class IconButton extends Button {
-  PImage icon;
-  PImage icon2;
-  PImage displayedIcon;
+  PShape icon;
+  PShape icon2;
+  PShape displayedIcon;
   
   int resizeFactor = 10;
   color col = 70;
   color hoverCol = 100;
   
-  IconButton (int x_,int y_, int breite_, int hoehe_, PImage icon_) {
+  IconButton (int x_,int y_, int breite_, int hoehe_, PShape icon_) {
     x = x_;
     y = y_;
     breite = breite_;
@@ -72,7 +126,7 @@ class IconButton extends Button {
     icon = icon_;
   }
   
-  IconButton (int x_,int y_, int breite_, int hoehe_, PImage icon_, PImage icon2_) {
+  IconButton (int x_,int y_, int breite_, int hoehe_, PShape icon_, PShape icon2_) {
     x = x_;
     y = y_;
     breite = breite_;
@@ -81,7 +135,7 @@ class IconButton extends Button {
     icon2 = icon2_;
   }
   
-  IconButton (int x_,int y_, int breite_, int hoehe_, PImage icon_, int targetScreen_) {
+  IconButton (int x_,int y_, int breite_, int hoehe_, PShape icon_, int targetScreen_) {
     x = x_;
     y = y_;
     breite = breite_;
@@ -90,7 +144,7 @@ class IconButton extends Button {
     targetScreen = targetScreen_;
   }
   
-  IconButton (int x_,int y_, int breite_, int hoehe_, PImage icon_, PImage icon2_, int targetScreen_) {
+  IconButton (int x_,int y_, int breite_, int hoehe_, PShape icon_, PShape icon2_, int targetScreen_) {
     x = x_;
     y = y_;
     breite = breite_;
@@ -120,8 +174,43 @@ class IconButton extends Button {
     
     
     rect(x,y,breite,hoehe,cornerRadius);
-    displayedIcon.resize(breite-resizeFactor,hoehe-resizeFactor);
-    image(displayedIcon,x+resizeFactor/2,y+resizeFactor/2);
+    //displayedIcon.resize(breite-resizeFactor,hoehe-resizeFactor);
+    displayedIcon.disableStyle();
+    fill(255);
+    shape(displayedIcon,x+resizeFactor/2,y+resizeFactor/2,breite-resizeFactor,hoehe-resizeFactor);
+    
+    
+    popStyle();
+  }
+  
+  void displayNoBG() {
+    pushStyle();
+    if (active) {
+    displayedIcon = icon2;
+    }
+    else {
+    displayedIcon = icon; 
+    }
+    isHovered();
+    if (mouseDown()) {
+      fill(200);
+    }
+    else if (hovered) {
+      fill(230);
+    }     
+    else {
+      fill(255);
+    }
+    noStroke();
+    
+    //println("FOR FUCKS SAKE");
+    //text("FUCK",200,200);
+    displayedIcon.disableStyle();
+    shape(displayedIcon,x,y,breite-resizeFactor,hoehe-resizeFactor);
+    //rect(x,y,breite,hoehe,cornerRadius);
+    
+    //displayedIcon.resize(breite-resizeFactor,hoehe-resizeFactor);
+    //image(displayedIcon,x+resizeFactor/2,y+resizeFactor/2);
     
     
     popStyle();
