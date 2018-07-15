@@ -211,6 +211,7 @@ void mouseReleased() {
   radioSteuerung.forwardButton.clicked("forward");
   radioSteuerung.backwardButton.clicked("backward");
   radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
+  radioSteuerung.favButton.clicked("setFav");
   }
   // Wecker
   if (screenNo == 1) {
@@ -245,4 +246,8 @@ void keyPressed () {
  if(key == BACKSPACE) {
    screenNo = 0;
  } 
+}
+
+void dispose() {
+  saveJSONObject(radioSenderJSON, "data/radiosender.json");
 }

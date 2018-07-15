@@ -51,6 +51,9 @@ class Button {
       if (function == "mute/unmute") {
         muteUnmute();
       }
+      if (function == "setFav") {
+        setFav();
+      }
     }
   }
   
@@ -126,6 +129,15 @@ class Button {
       muted = false;
     }
   }
+  
+  void setFav(){
+    if (!sender.getBoolean("isFavorite")) {
+     sender.setBoolean("isFavorite",true);
+    }
+    else {
+     sender.setBoolean("isFavorite",false);
+    }
+  } 
 }
 
 class IconButton extends Button {
