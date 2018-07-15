@@ -45,14 +45,14 @@ class Uhr {
     uhrzeit = nf(std,2)+":"+nf(min,2)+":"+nf(sec,2);
     textAlign(CENTER);
     textFont(Quartz_128);
-    textSize(120);
+    textSize(80);
     fill(40);
-    text("00:00:00",x,y+30);
+    text("00:00:00",x,y);
     fill(255);
-    text(uhrzeit,x,y+30);
+    text(uhrzeit,x,y);
     popStyle();
     //println(uhrzeit);
-    showDate(x,y+90);
+    showDate(x,y+40);
   }
   
   void analog() {
@@ -137,7 +137,7 @@ class switchButton extends Button {
   PShape icon2;
   String switchText;
   
-  switchButton(int x_,int y_, int breite_, int hoehe_, PShape icon_, PShape icon2_) {
+  switchButton(int x_,int y_, int breite_, int hoehe_, PShape icon_) {
     x = x_;
     y = y_;
     breite = breite_;
@@ -164,39 +164,39 @@ class switchButton extends Button {
     noFill();
     isHovered();
     strokeWeight(3);
-    rect(x,y,breite,hoehe,10);
+    rect(x,y,breite,hoehe,3);
     fill(255);
 
     if (!active) {
 
     // Linke Füllung
-    rect(x,y,breite/2,hoehe,10,0,0,10);
+    rect(x,y,breite/2,hoehe,3,0,0,3);
     
     // Clock dark
     icon.disableStyle();
     fill(50);
     noStroke();
-    shape(icon,x+6,y+6,hoehe-12,hoehe-12);
+    shape(icon,x+8,y+6,hoehe-12,hoehe-12);
     // Text White
     textFont(SFproBold_128);
-    textSize(14);
+    textSize(10);
     
     fill(255);
-    text(switchText,x+breite/2+5,y+hoehe/2+6);
+    text(switchText,x+breite/2+3,y+hoehe/2+4);
     }
     else {
     // Rechte Füllung
-    rect(x+breite/2,y,breite/2,hoehe,0,10,10,0);
+    rect(x+breite/2,y,breite/2,hoehe,0,3,3,0);
     // Clock white
     icon.disableStyle();
     fill(255);
     noStroke();
-    shape(icon,x+6,y+6,hoehe-12,hoehe-12);
+    shape(icon,x+8,y+6,hoehe-12,hoehe-12);
     // Text Dark
     textFont(SFproBold_128);
-    textSize(14);
+    textSize(10);
     fill(50);
-    text(switchText,x+breite/2+5,y+hoehe/2+6);
+    text(switchText,x+breite/2+3,y+hoehe/2+4);
     }
     popStyle();
   }

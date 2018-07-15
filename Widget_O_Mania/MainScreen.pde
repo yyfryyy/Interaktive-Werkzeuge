@@ -10,8 +10,8 @@ void MainScreen() {
  minButtonWecker = new IconButton(weckerMax.x+15,weckerMax.y+15,30,30, minIcon,maxIcon,0);
  
  
- uhr = new Uhr(wecker.x+wecker.breite/2,wecker.y+35+wecker.hoehe/2,125);
-
+ uhr = new Uhr(wecker.x+200,wecker.y+35+wecker.hoehe/2,125);
+ uhrSwitch = new switchButton(wecker.x+15,wecker.y+70,70,30,clock,"09:00");
  //==============================================
  
   //=============Setup Radio=====================
@@ -35,7 +35,7 @@ void MainScreen() {
  maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
  
- uhrSwitch = new switchButton(wecker.x+wecker.breite-160,wecker.y+70,100,50,clock,"09:00");
+ 
  
  //==============================================
    init = true;
