@@ -1,10 +1,12 @@
 import java.util.*;
 import java.text.SimpleDateFormat;
 import ddf.minim.*;
+import ddf.minim.signals.*;
 
 Minim minim;
 AudioPlayer player;
 AudioMetaData meta;
+AudioOutput out;
 
 JSONObject radioSenderJSON;
 JSONObject radiosender;
@@ -15,7 +17,8 @@ JSONObject sender;
 String radioName;
 int songIndex;
 int senderIndex;
-
+boolean isPlaying;
+boolean muted;
 
 PFont SFproBold_128;
 PFont SFproLight_128;
@@ -24,7 +27,8 @@ PFont SFproSemiBold_128;
 PFont Quartz_128;
 
 int screenNo = 0;
-
+float realVolume = 0.75;
+float oldVolume;
 
 PImage clockIconWhite;
 PImage clockIconDark;
@@ -36,8 +40,16 @@ PShape playIcon;
 PShape pauseIcon;
 PShape forwardIcon;
 PShape backwardIcon;
+PShape favIcon;
+PShape noFavIcon;
+PShape mutedIcon;
+PShape fullVolumeIcon;
+PShape halfVolumeIcon;
 
 boolean init;
+boolean initRadio;
+boolean initWecker;
+boolean initWetter;
 boolean clockActive;
 
 Widget wecker;
@@ -80,6 +92,7 @@ void setup() {
  printArray(fontList);
  //Minim & Radiosender
  minim = new Minim(this);
+ out = minim.getLineOut();
  //player = minim.loadFile("http://swr-swr3-live.cast.addradio.de/swr/swr3/live/mp3/128/stream.mp3");
  radioSenderJSON = loadJSONObject("radiosender.json");
  radiosender = radioSenderJSON.getJSONObject("radioJSON");
@@ -110,6 +123,8 @@ void setup() {
  pauseIcon = loadShape("pause-button.svg");
  forwardIcon = loadShape("forward-button.svg");
  backwardIcon = loadShape("backward-button.svg");
+ favIcon = loadShape("star.svg");
+ noFavIcon = loadShape("star-2.svg");
  
  maxIcon = loadShape("maximize.svg");
  minIcon = loadShape("minimize.svg");
@@ -163,7 +178,8 @@ void draw() {
  //println(frameRate);
  text("Fps: "+ frameRate,20,20);
  uhr.updateClock();
- 
+ player.setGain(map(realVolume,0,1,-45,0));
+
  switch(screenNo) {
    case 0:
    MainScreen();
@@ -194,6 +210,7 @@ void mouseReleased() {
   radioSteuerung.playButton.clicked("play/pause");
   radioSteuerung.forwardButton.clicked("forward");
   radioSteuerung.backwardButton.clicked("backward");
+  radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
   }
   // Wecker
   if (screenNo == 1) {

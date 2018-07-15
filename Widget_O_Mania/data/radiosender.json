@@ -3,6 +3,7 @@
     "senderliste": [
       {
         "name": "SWR3",
+        "isFavorite": false,
         "songs": [
           "Greta Van Fleet – 01. Highway Tune.mp3",
           "Oasis - MTV Unplugged 1996 – Whatever.mp3",
@@ -11,6 +12,7 @@
       },
       {
         "name": "Hitradio Ohr",
+        "isFavorite": false,
         "songs": [
           "Fiddler's Green – Victor And His Demons.mp3",
           "Die Ärzte – Schrei Nach Liebe.mp3",
@@ -19,11 +21,23 @@
       },
       {
         "name": "BADEN.FM",
+        "isFavorite": true,
         "songs": [
           "The Band – The Night They Drove Old Dixie Down (2000 - Remaster).mp3",
           "The Marvelettes – Please Mr. Postman.mp3",
           "Caravan Palace – Wonderland.mp3",
           "Caravan Palace – Lone Digger.mp3"
+        ]
+      },
+      {
+        "name": "ROCK FM",
+        "isFavorite": false,
+        "songs": [
+          "Hells Bells.mp3",
+          "Kansas - Carry On Wayward Son.mp3",
+          "Kansas – Dust In The Wind.mp3",
+          "Guns N' Roses - Sweet Child O' Mine.mp3",
+          "AC_DC - You Shook Me All Night Long.mp3"
         ]
       }
     ]

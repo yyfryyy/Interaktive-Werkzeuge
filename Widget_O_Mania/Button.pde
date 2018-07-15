@@ -48,12 +48,15 @@ class Button {
       if (function == "backward") {
         senderBackward();
       }
+      if (function == "mute/unmute") {
+        muteUnmute();
+      }
     }
   }
   
   void changeScreen() {
     screenNo = targetScreen;
-    init = false;
+    //init = false;
     hovered = false;
   }
   
@@ -65,9 +68,11 @@ class Button {
   void playPause() {
     if (player.isPlaying()) {
       player.pause();
+      isPlaying = false;
     }
     else {
       player.play();
+      isPlaying = true;
     }
     active = !active;
   }
@@ -105,6 +110,20 @@ class Button {
     meta = player.getMetaData();
     if (radioSteuerung.playButton.active) {
     player.play();
+    }
+  }
+  
+  void muteUnmute() {
+    if (!muted) {
+      oldVolume = radioSteuerung.volumeSlider.pixelVolume;
+      radioSteuerung.volumeSlider.pixelVolume = 0;
+      player.mute();
+      muted = true;
+    }
+    else if (muted) {
+      radioSteuerung.volumeSlider.pixelVolume = oldVolume;
+      player.unmute();
+      muted = false;
     }
   }
 }
