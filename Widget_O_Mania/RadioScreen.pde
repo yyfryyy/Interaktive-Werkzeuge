@@ -12,15 +12,15 @@ void RadioScreen() {
   
   //============Draw Radio=======================
  radioMax.display();
- minButtonRadio.display();
+ minButtonRadio.displayNoBG();
  //==============================================
  
 
  weckerMin.display();
- maxButtonWeckerSmall.display();
+ maxButtonWeckerSmall.displayNoBG();
  
  
  
  wetterMin.display();
- maxButtonWetterSmall.display();
+ maxButtonWetterSmall.displayNoBG();
 }

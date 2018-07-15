@@ -9,13 +9,13 @@ void WetterScreen() {
  } 
   
  wetterMax.display();
- minButtonWetter.display();
+ minButtonWetter.displayNoBG();
  
  
  weckerMin.display();
- maxButtonWeckerSmall.display();
+ maxButtonWeckerSmall.displayNoBG();
  
  
  radioMin.display();
- maxButtonRadioSmall.display();
+ maxButtonRadioSmall.displayNoBG();
 }

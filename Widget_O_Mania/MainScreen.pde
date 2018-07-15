@@ -45,7 +45,7 @@ void MainScreen() {
  
    //============Draw Uhr=======================
  wecker.display();
- maxButtonWecker.display();
+ maxButtonWecker.displayNoBG();
   
   if (uhrSwitch.active) {
   uhr.digital();
@@ -65,13 +65,13 @@ void MainScreen() {
  
  
  
- maxButtonRadio.display();
+ maxButtonRadio.displayNoBG();
  radioSteuerung.steuerungSmall();
  //==============================================
  
   //============Draw Wetter=======================
  wetter.display();
- maxButtonWetter.display();
+ maxButtonWetter.displayNoBG();
  //==============================================
 
 }

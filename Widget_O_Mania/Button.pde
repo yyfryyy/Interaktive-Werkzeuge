@@ -177,16 +177,16 @@ class IconButton extends Button {
     displayedIcon = icon;
     isHovered();
     if (mouseDown()) {
-      fill(150);
+      fill(200);
       if (icon2!=null) {
         displayedIcon = icon2; 
       }
     }
     else if (hovered) {
-      fill(hoverCol);
+      fill(255);
     }     
     else {
-      fill(col);
+      fill(220);
     }
     noStroke();
     
@@ -215,10 +215,10 @@ class IconButton extends Button {
       fill(200);
     }
     else if (hovered) {
-      fill(230);
+      fill(255);
     }     
     else {
-      fill(255);
+      fill(220);
     }
     noStroke();
     

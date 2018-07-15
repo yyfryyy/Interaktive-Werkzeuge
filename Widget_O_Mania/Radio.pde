@@ -93,13 +93,13 @@ class ToggleButton extends Button {
     }
     isHovered();
     if (mouseDown()) {
-      fill(hoverCol-30);
+      fill(200);
     }
     else if (hovered) {
-      fill(hoverCol);
+      fill(255);
     }     
     else {
-      fill(col);
+      fill(220);
     }
     noStroke();
     
@@ -144,13 +144,13 @@ class ToggleButton extends Button {
       }
       isHovered();
       if (mouseDown()) {
-        fill(hoverCol-30);
+        fill(200);
       }
       else if (hovered) {
-        fill(hoverCol);
+        fill(255);
       }     
       else {
-        fill(col);
+        fill(220);
       }
       noStroke();
       
@@ -299,10 +299,10 @@ class ToggleButton extends Button {
         fill(200);
       }
       else if (hovered) {
-        fill(230);
+        fill(255);
       }     
       else {
-        fill(255);
+        fill(220);
       }
       noStroke();
       

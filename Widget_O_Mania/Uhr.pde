@@ -174,7 +174,7 @@ class switchButton extends Button {
     
     // Clock dark
     icon.disableStyle();
-    fill(0);
+    fill(50);
     noStroke();
     shape(icon,x+6,y+6,hoehe-12,hoehe-12);
     // Text White
@@ -195,7 +195,7 @@ class switchButton extends Button {
     // Text Dark
     textFont(SFproBold_128);
     textSize(14);
-    fill(0);
+    fill(50);
     text(switchText,x+breite/2+5,y+hoehe/2+6);
     }
     popStyle();
