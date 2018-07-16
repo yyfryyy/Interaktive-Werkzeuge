@@ -214,9 +214,19 @@ class OnOffButton extends Button {
       fill(255);
       if (!active) {
       ellipse(x,y+hoehe/2,30,30);
+        if(mouseDown()) { 
+          fill(230);
+          ellipse(x,y+hoehe/2,15,15);
+          fill(255);
+        }
       }
       else {
       ellipse(x+25,y+hoehe/2,30,30);
+        if(mouseDown()) { 
+          fill(230);
+          ellipse(x+25,y+hoehe/2,15,15);
+          fill(255);
+        }
       }
     popStyle();
   }

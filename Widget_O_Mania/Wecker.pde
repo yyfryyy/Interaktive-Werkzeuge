@@ -9,6 +9,8 @@ class Wecker{
   int prevMin;
   int nextMin;
   int oldMin;
+  int remainMin;
+  int remainHour;
   TextButton setAlarm;
   TextButton editAlarm;
   OnOffButton turnOnAlarm;
@@ -38,6 +40,8 @@ class Wecker{
   
   void setWecker() {
     pushStyle();
+
+    showRemainingTime();
     if (alarmIsOn) {
       turnOnAlarm.active = true;
     }
@@ -80,12 +84,41 @@ class Wecker{
     text(numberToString(prevHour)+" : "+numberToString(prevMin),x-1,y-50);
     // text unten
     text(numberToString(nextHour)+" : "+numberToString(nextMin),x-1,y+35);
-    }
+    }    
     popStyle();
   }
   
   String numberToString(int numberToConvert) {
     return nf(numberToConvert,2);
+  }
+  
+  void showRemainingTime() {
+    remainMin = weckerMinute-floor(uhr.min);
+    remainHour = weckerHour-uhr.std;
+    if (remainMin < 0) {
+      remainMin += 60;
+    }
+    if (weckerMinute > uhr.min && weckerMinute<24) {
+      remainMin--;
+    }
+    if (remainHour <= 0) {
+      remainHour += 23;
+    }
+    if (weckerHour > uhr.std && weckerHour<24) {
+      remainHour--;
+    }
+    pushStyle();
+    fill(255);
+    textFont(SFproLight_128);
+    textSize(14);
+    textAlign(CENTER);
+    if (!alarmIsSet && alarmIsOn) {
+    text(remainHour+"h "+remainMin+"m verbleibend.",x,y+140);
+    }
+    else if (alarmIsSet && alarmIsOn) {
+    text(remainHour+"h "+remainMin+"m verbleibend.",x,y+100);
+    }
+    popStyle();
   }
   
   void calcAnzeige() {
