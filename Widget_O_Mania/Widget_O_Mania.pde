@@ -23,6 +23,7 @@ boolean muted;
 PFont SFproBold_128;
 PFont SFproLight_128;
 PFont SFproSemiBold_128;
+PFont Monospace;
 
 PFont Quartz_128;
 
@@ -51,6 +52,9 @@ boolean initRadio;
 boolean initWecker;
 boolean initWetter;
 boolean clockActive;
+boolean alarmIsSet = true;
+boolean alarmIsOn = false;
+
 
 Widget wecker;
 Widget radio;
@@ -79,6 +83,10 @@ switchButton uhrSwitch;
 Radio radioSteuerung;
 
 Uhr uhr;
+
+Wecker weckerMain;
+int weckerHour = 12;
+int weckerMinute = 0;
 
 
 
@@ -116,6 +124,7 @@ void setup() {
  SFproBold_128 = createFont("SFProDisplay-Bold",128);
  SFproLight_128 = createFont("SFProDisplay-Light",128);
  SFproSemiBold_128 = createFont("SFProDisplay-Semibold",128);
+ Monospace = createFont("Monospaced",128);
  
  Quartz_128 = createFont("DigitalDismay",128);
 
@@ -212,6 +221,14 @@ void mouseReleased() {
   radioSteuerung.backwardButton.clicked("backward");
   radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
   radioSteuerung.favButton.clicked("setFav");
+  
+  weckerMain.turnOnAlarm.clicked("toggleAlarm");
+    if (!alarmIsSet) {
+    weckerMain.setAlarm.clicked("weckerSet");
+    }
+    else if (alarmIsSet) {
+    weckerMain.editAlarm.clicked("weckerSet");
+    }
   }
   // Wecker
   if (screenNo == 1) {
@@ -240,6 +257,29 @@ void mousePos() {
 fill(255,0,0);
 textSize(14);
 text(mouseX+"x"+mouseY,mouseX,mouseY);
+}
+
+void mouseWheel(MouseEvent event) {
+  if (weckerMain.isHovered("hour") && !alarmIsSet) {
+    if (frameCount % 5 == 0) {
+      if (event.getCount() > 0) {
+      weckerHour++;
+      }
+      else {
+      weckerHour--;
+      }
+    }
+  }
+  if (weckerMain.isHovered("minute") && !alarmIsSet) {
+    if (frameCount % 5 == 0) {
+      if (event.getCount() > 0) {
+      weckerMinute++;
+      }
+      else {
+      weckerMinute--;
+      }
+    }
+  }
 }
 
 void keyPressed () {

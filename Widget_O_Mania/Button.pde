@@ -54,6 +54,12 @@ class Button {
       if (function == "setFav") {
         setFav();
       }
+      if (function == "weckerSet") {
+        weckerSet();
+      }
+      if (function == "toggleAlarm") {
+        toggleAlarm();
+      }
     }
   }
   
@@ -137,7 +143,123 @@ class Button {
     else {
      sender.setBoolean("isFavorite",false);
     }
-  } 
+  }
+  
+  void weckerSet() {
+    alarmIsSet = !alarmIsSet;
+  }
+  
+  void toggleAlarm() {
+    alarmIsOn = !alarmIsOn;
+  }
+}
+
+class OnOffButton extends Button {
+
+  OnOffButton(int x_, int y_) {
+    x = x_;
+    y = y_;
+    breite = 40;
+    hoehe = 30;
+  }
+  
+  void display() {
+    pushStyle();
+      isHovered();
+      strokeCap(ROUND);
+      //Outline
+      if (hovered) {
+        if (!active) {
+          stroke(180);
+        }
+        else {
+          stroke(0,170,0);
+        }
+      }
+      else {
+        if (!active) {
+          stroke(200);
+        }
+        else {
+          stroke(0,180,0);
+        }
+      }
+      strokeWeight(23);
+      line(x,y+hoehe/2,x+25,y+hoehe/2);
+      //Fill
+      if(!active) {
+        if (hovered) {
+          stroke(200);
+        }
+        else {
+          stroke(220);
+        }
+      }
+      
+      else {
+        if (hovered) {
+          stroke(0,190,0);
+        }
+        else {
+          stroke(0,200,0);
+        }
+      }
+      strokeWeight(20);
+      line(x,y+hoehe/2,x+25,y+hoehe/2);
+      
+      noStroke();
+      fill(255);
+      if (!active) {
+      ellipse(x,y+hoehe/2,30,30);
+      }
+      else {
+      ellipse(x+25,y+hoehe/2,30,30);
+      }
+    popStyle();
+  }
+
+}
+
+class TextButton extends Button {
+  String text;
+  
+  TextButton (int x_,int y_, int breite_, int hoehe_, String text_) {
+    x = x_;
+    y = y_;
+    breite = breite_;
+    hoehe = hoehe_;
+    text = text_;
+  }
+  
+  void display() {
+  pushStyle();
+  isHovered();
+  textAlign(CENTER);
+  textFont(SFproLight_128);
+  textSize(18);
+  noStroke();
+    if (mouseDown()) {
+      fill(100);
+    }
+    else if (hovered) {
+      fill(155);
+    }     
+    else {
+      fill(120);
+    }
+  rect(x,y,breite,hoehe,5);
+    if (mouseDown()) {
+      fill(200);
+    }
+    else if (hovered) {
+      fill(255);
+    }     
+    else {
+      fill(220);
+    }
+  text(text,x+breite/2,y+hoehe/2+5);
+  popStyle();
+  }
 }
 
 class IconButton extends Button {

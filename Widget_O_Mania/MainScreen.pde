@@ -11,7 +11,9 @@ void MainScreen() {
  
  
  uhr = new Uhr(wecker.x+200,wecker.y+35+wecker.hoehe/2,125);
- uhrSwitch = new switchButton(wecker.x+15,wecker.y+70,70,30,clock,"09:00");
+ uhrSwitch = new switchButton(wecker.x+10,wecker.y+70,70,30,clock,"09:00");
+ 
+ weckerMain = new Wecker(wecker.x+485,wecker.y+200);
  //==============================================
  
   //=============Setup Radio=====================
@@ -43,7 +45,7 @@ void MainScreen() {
  
  
  
-   //============Draw Uhr=======================
+   //============Draw Uhr & Wecker=======================
  wecker.display();
  maxButtonWecker.displayNoBG();
   
@@ -54,6 +56,8 @@ void MainScreen() {
   uhr.analog();
   }
   uhrSwitch.display();
+  
+  weckerMain.setWecker();
  //==============================================
  
  
