@@ -101,15 +101,16 @@ class Wecker{
   }
   
   void alarmKlingeln() {
-    if (weckerHour == uhr.std && weckerMinute == uhr.min && alarmIsOn) {
-      alarmPlayer.play();
-      alarmKlingelt = true;
-    }
-    if (weckerHour != uhr.std && weckerMinute != uhr.min && alarmIsOn) {
+    if (weckerHour != uhr.std || weckerMinute != uhr.min && alarmKlingelt || !alarmIsOn) {
       alarmPlayer.pause();
       alarmPlayer.rewind();
       alarmKlingelt = false;
     }
+    if (weckerHour == uhr.std && weckerMinute == uhr.min && alarmIsOn) {
+      alarmPlayer.play();
+      alarmKlingelt = true;
+    }
+
   }
   
   void showRemainingTime() {
