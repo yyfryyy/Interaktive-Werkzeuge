@@ -147,6 +147,9 @@ class Button {
   
   void weckerSet() {
     alarmIsSet = !alarmIsSet;
+    if (alarmIsSet) {
+      alarmIsOn = true;
+    }
   }
   
   void toggleAlarm() {

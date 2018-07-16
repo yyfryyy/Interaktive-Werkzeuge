@@ -7,6 +7,9 @@ class Uhr {
   float angleStd;
   float angleMin;
   float angleSec;
+  float angleWeckerStd;
+  float angleWeckerMin;
+  
   
   String uhrzeit;
   
@@ -85,6 +88,15 @@ class Uhr {
       popMatrix();
     }
     
+    //==============Weckerzeiger==============
+    pushStyle();
+    angleWeckerStd = map(weckerHour+norm(weckerMinute,0,60),0,24,0,4*PI);
+    angleWeckerStd -= HALF_PI;
+    strokeWeight(3);
+    stroke(0,200,0);
+    line(0,0,radius*0.5*cos(angleWeckerStd),radius*0.5*sin(angleWeckerStd));
+    line(0,0,-radius*0.15*cos(angleWeckerStd),-radius*0.15*sin(angleWeckerStd));
+    popStyle();
     //==============Stundenzeiger==============
     angleStd = map(std+norm(min,0,60),0,24,0,4*PI);
     angleStd -= HALF_PI;
@@ -122,7 +134,7 @@ class Uhr {
     textFont(SFproLight_128);
     textSize(24);
     fill(255);
-    String datum = tagesname +" der, " +nf(day,2)+"."+nf(month,2)+"."+nf(year,4);
+    String datum = tagesname +", der " +nf(day,2)+"."+nf(month,2)+"."+nf(year,4);
     //println(datum);
     textAlign(CENTER);
     text(datum,xOff,yOff);

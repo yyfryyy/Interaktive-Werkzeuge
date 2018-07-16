@@ -261,24 +261,24 @@ text(mouseX+"x"+mouseY,mouseX,mouseY);
 
 void mouseWheel(MouseEvent event) {
   if (weckerMain.isHovered("hour") && !alarmIsSet) {
-    if (frameCount % 5 == 0) {
+    //if (frameCount % 2 == 0) {
       if (event.getCount() > 0) {
       weckerHour++;
       }
       else {
       weckerHour--;
       }
-    }
+    //}
   }
   if (weckerMain.isHovered("minute") && !alarmIsSet) {
-    if (frameCount % 5 == 0) {
+    //if (frameCount % 2 == 0) {
       if (event.getCount() > 0) {
       weckerMinute++;
       }
       else {
       weckerMinute--;
       }
-    }
+    //}
   }
 }
 
