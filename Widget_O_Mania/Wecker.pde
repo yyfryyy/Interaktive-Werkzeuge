@@ -13,6 +13,7 @@ class Wecker{
   int remainHour;
   TextButton setAlarm;
   TextButton editAlarm;
+  TextButton schlummern;
   OnOffButton turnOnAlarm;
   
   Wecker(int x_, int y_) {
@@ -20,6 +21,7 @@ class Wecker{
     y = y_;
     setAlarm = new TextButton(x-60,y+80,120,40,"SET ALARM");
     editAlarm = new TextButton(x-60,y+40,120,40,"EDIT ALARM");
+    schlummern = new TextButton(x-80,y+40,160,40,"SCHLUMMERN");
     turnOnAlarm = new OnOffButton(x+45,y-120);
   }
   
@@ -40,7 +42,7 @@ class Wecker{
   
   void setWecker() {
     pushStyle();
-
+    alarmKlingeln();
     showRemainingTime();
     if (alarmIsOn) {
       turnOnAlarm.active = true;
@@ -50,7 +52,12 @@ class Wecker{
     }
     turnOnAlarm.display();
     if (alarmIsSet) {
+      if (!alarmKlingelt) {
       editAlarm.display();
+      }
+      else if (alarmKlingelt) {
+      schlummern.display();
+      }
       textFont(Monospace);
       textAlign(CENTER);
       textSize(55);
@@ -63,6 +70,7 @@ class Wecker{
     //=============Wecker einstellen===========
     //calculate Zeugs
     setAlarm.display();
+
     weckerHour = constrainNum(weckerHour,24);
     weckerMinute = constrainNum(weckerMinute,60);
     calcAnzeige();
@@ -90,6 +98,18 @@ class Wecker{
   
   String numberToString(int numberToConvert) {
     return nf(numberToConvert,2);
+  }
+  
+  void alarmKlingeln() {
+    if (weckerHour == uhr.std && weckerMinute == uhr.min && alarmIsOn) {
+      alarmPlayer.play();
+      alarmKlingelt = true;
+    }
+    if (weckerHour != uhr.std && weckerMinute != uhr.min && alarmIsOn) {
+      alarmPlayer.pause();
+      alarmPlayer.rewind();
+      alarmKlingelt = false;
+    }
   }
   
   void showRemainingTime() {

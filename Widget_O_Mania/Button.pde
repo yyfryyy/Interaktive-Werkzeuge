@@ -60,6 +60,9 @@ class Button {
       if (function == "toggleAlarm") {
         toggleAlarm();
       }
+      if (function == "snooze") {
+        snooze();
+      }
     }
   }
   
@@ -155,6 +158,16 @@ class Button {
   void toggleAlarm() {
     alarmIsOn = !alarmIsOn;
   }
+  
+  void snooze() {
+    weckerMinute+=5;
+    if (weckerMinute >= 60) {
+    weckerHour++;
+    weckerMinute =weckerMinute-60;
+    }
+    schlummernSet = true;
+  }
+  
 }
 
 class OnOffButton extends Button {

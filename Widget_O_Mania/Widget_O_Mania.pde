@@ -5,6 +5,7 @@ import ddf.minim.signals.*;
 
 Minim minim;
 AudioPlayer player;
+AudioPlayer alarmPlayer;
 AudioMetaData meta;
 AudioOutput out;
 
@@ -54,6 +55,8 @@ boolean initWetter;
 boolean clockActive;
 boolean alarmIsSet = true;
 boolean alarmIsOn = false;
+boolean alarmKlingelt;
+boolean schlummernSet;
 
 
 Widget wecker;
@@ -112,7 +115,7 @@ void setup() {
  println(songIndex);
  song = playlist.getString(songIndex);
  
- 
+ alarmPlayer = minim.loadFile("Atom - Atom-Alarm-Sirene.mp3");
  player = minim.loadFile(song);
  meta = player.getMetaData();
  println(radioName);
@@ -226,8 +229,11 @@ void mouseReleased() {
     if (!alarmIsSet) {
     weckerMain.setAlarm.clicked("weckerSet");
     }
-    else if (alarmIsSet) {
+    else if (alarmIsSet && !alarmKlingelt) {
     weckerMain.editAlarm.clicked("weckerSet");
+    }
+    else if (alarmIsSet && alarmKlingelt) {
+    weckerMain.schlummern.clicked("snooze");
     }
   }
   // Wecker
