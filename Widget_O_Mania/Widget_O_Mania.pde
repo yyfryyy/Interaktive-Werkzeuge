@@ -13,6 +13,9 @@ JSONArray currentWeatherJSON;
 String currentWeatherText;
 int currentWeatherIconInt;
 PShape currentWeatherIcon;
+PShape waterDropIcon;
+PShape dayIcon;
+PShape nightIcon;
 int currentTemperature;
 int todayWeatherRainProbDay;
 int todayWeatherRainProbNight;
@@ -31,6 +34,9 @@ int[] dailyRainProbDay = new int[5];
 
 JSONObject hourlyForecastJSON;
 JSONArray hourlyForecast;
+
+String[] daytempTime = new String[8];
+
 int[] day1tempArray = new int[8];
 int[] day2tempArray = new int[8];
 int[] day3tempArray = new int[8];
@@ -51,6 +57,8 @@ boolean muted;
 
 PFont SFproBold_128;
 PFont SFproLight_128;
+PFont SFproUltraLight_128;
+PFont SFproThin_128;
 PFont SFproSemiBold_128;
 PFont Monospace;
 
@@ -115,6 +123,8 @@ Radio radioSteuerung;
 
 Uhr uhr;
 
+Wetter wetterMain;
+
 Wecker weckerMain;
 int weckerHour = 12;
 int weckerMinute = 0;
@@ -163,6 +173,8 @@ void setup() {
  
  SFproBold_128 = createFont("SFProDisplay-Bold",128);
  SFproLight_128 = createFont("SFProDisplay-Light",128);
+ SFproUltraLight_128 = createFont("SFProDisplay-Ultralight",128);
+ SFproThin_128 = createFont("SFProDisplay-Thin",128);
  SFproSemiBold_128 = createFont("SFProDisplay-Semibold",128);
  Monospace = createFont("Monospaced",128);
  
@@ -215,6 +227,12 @@ void setup() {
  maxButtonWetter = new IconButton(wetter.x+15,wetter.y+15,30,30, maxIcon, minIcon,3);
  maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
+ 
+ wetterMain = new Wetter(wetter.x,wetter.y);
+ 
+ waterDropIcon = loadShape("data/weather_icons/waterdrop_icon.svg");
+ dayIcon = loadShape("data/weather_icons/weatherIcon_1.svg");
+ nightIcon = loadShape("data/weather_icons/weatherIcon_33.svg");
  //==============================================
  
  //========Get weather====
@@ -395,7 +413,15 @@ void getWeather() {
   int n = 0;
   // Array für Temperatur an Tag 1
   for (int i = 0; i<8;i++) {
+    Date pdate = new Date();
     day1tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    String date = hourlyForecast.getJSONObject(i).getString("dt_txt");
+    try {
+      pdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+    }
+    catch (Exception e) {
+    }
+    daytempTime[n] = new SimpleDateFormat("HH").format(pdate);
     n++;
   }
   n = 0;
@@ -432,6 +458,6 @@ void getWeather() {
   todayMaxTemp = dailyMaxTemp[0];
   todayMinTemp = dailyMinTemp[0];
   println(currentWeatherText + " - Icon " + currentWeatherIcon + " - " + currentTemperature +"°C");
-  //printArray(day5tempArray);
+  printArray(daytempTime);
 
 }

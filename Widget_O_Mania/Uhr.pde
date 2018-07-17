@@ -17,6 +17,7 @@ class Uhr {
   int month;
   int year;
   String tagesname;
+  String monatsname;
   
   int x;
   int y;
@@ -39,6 +40,7 @@ class Uhr {
     year = year();
     
     tagesname = new SimpleDateFormat("EEEE").format(new Date());
+    monatsname = new SimpleDateFormat("MMMM").format(new Date());
     //println(tagesname);
   }
   

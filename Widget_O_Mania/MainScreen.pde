@@ -37,7 +37,7 @@ void MainScreen() {
  maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
  
- 
+ wetterMain = new Wetter(wetter.x,wetter.y);
  
  //==============================================
    init = true;
@@ -76,6 +76,8 @@ void MainScreen() {
   //============Draw Wetter=======================
  wetter.display();
  maxButtonWetter.displayNoBG();
+ 
+ wetterMain.currentWeather();
  //==============================================
 
 }
