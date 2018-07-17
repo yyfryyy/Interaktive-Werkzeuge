@@ -1,0 +1,23 @@
+[
+    {
+    "LocalObservationDateTime": "2018-07-16T22:55:00+02:00",
+    "EpochTime": 1531774500,
+    "WeatherText": "Klar",
+    "WeatherIcon": 33,
+    "IsDayTime": false,
+    "Temperature": {
+        "Metric": {
+            "Value": 22.4,
+            "Unit": "C",
+            "UnitType": 17
+        },
+        "Imperial": {
+            "Value": 72.0,
+            "Unit": "F",
+            "UnitType": 18
+        }
+    },
+    "MobileLink": "http://m.accuweather.com/de/de/stuttgart/70173/current-weather/167220",
+    "Link": "http://www.accuweather.com/de/de/stuttgart/70173/current-weather/167220"
+    }
+]

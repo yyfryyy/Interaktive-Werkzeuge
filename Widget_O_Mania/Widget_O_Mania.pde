@@ -9,6 +9,34 @@ AudioPlayer alarmPlayer;
 AudioMetaData meta;
 AudioOutput out;
 
+JSONArray currentWeatherJSON;
+String currentWeatherText;
+int currentWeatherIconInt;
+PShape currentWeatherIcon;
+int currentTemperature;
+int todayWeatherRainProbDay;
+int todayWeatherRainProbNight;
+int todayMaxTemp;
+int todayMinTemp;
+String location;
+int refreshMin;
+int refreshHour;
+
+JSONObject dailyForecastJSON;
+JSONArray dailyForecast;
+int[] dailyMaxTemp = new int[5];
+int[] dailyMinTemp = new int[5];
+int[] dailyRainProbNight = new int[5];
+int[] dailyRainProbDay = new int[5];
+
+JSONObject hourlyForecastJSON;
+JSONArray hourlyForecast;
+int[] day1tempArray = new int[8];
+int[] day2tempArray = new int[8];
+int[] day3tempArray = new int[8];
+int[] day4tempArray = new int[8];
+int[] day5tempArray = new int[8];
+
 JSONObject radioSenderJSON;
 JSONObject radiosender;
 JSONArray senderArray;
@@ -91,7 +119,15 @@ Wecker weckerMain;
 int weckerHour = 12;
 int weckerMinute = 0;
 
+// Current Weather Conditions Accuweather API 
+String accuapikey = "YvoL1FuxVLloTYlOvfjUanQMCIGyxZnC";
+String locationkey = "167220";
+String currentConditionURL = "http://dataservice.accuweather.com/currentconditions/v1/"+locationkey+"?apikey="+accuapikey+"&language=de&details=false";
 
+
+// 3 Hour Forecast 5 Days OpenWeatherMap API
+String openweatherapikey = "be1173a9306197e365ab025aab244d1e";
+String hourForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Stuttgart,de&unity=metric&APPID=be1173a9306197e365ab025aab244d1e";
 
 void setup() {
  fullScreen();
@@ -99,8 +135,8 @@ void setup() {
  pixelDensity(displayDensity());
  //textMode(SHAPE);
  //frame.setResizable(true);
- String[] fontList = PFont.list();
- printArray(fontList);
+ //String[] fontList = PFont.list();
+ //printArray(fontList);
  //Minim & Radiosender
  minim = new Minim(this);
  out = minim.getLineOut();
@@ -108,7 +144,8 @@ void setup() {
  radioSenderJSON = loadJSONObject("radiosender.json");
  radiosender = radioSenderJSON.getJSONObject("radioJSON");
  senderArray = radiosender.getJSONArray("senderliste");
- sender = senderArray.getJSONObject(floor(random(senderArray.size())));
+ senderIndex = floor(random(senderArray.size()));
+ sender = senderArray.getJSONObject(senderIndex);
  radioName = sender.getString("name");
  playlist = sender.getJSONArray("songs");
  songIndex = floor(random(playlist.size()));
@@ -180,13 +217,18 @@ void setup() {
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
  //==============================================
  
- 
- 
+ //========Get weather====
+ getWeather();
  
 }
 
 void draw() {
- background(155);
+ if (!alarmKlingelt) {
+   background(155);
+   }
+ else {
+ background(map(noise(frameCount*0.5+10000),0,1,0,200),map(2*noise(frameCount*0.5+10000),0,1,0,200),map(noise(frameCount*0.5+10000),0,1,0,200));
+ }
  //println(frameRate);
  text("Fps: "+ frameRate,20,20);
  uhr.updateClock();
@@ -296,4 +338,100 @@ void keyPressed () {
 
 void dispose() {
   saveJSONObject(radioSenderJSON, "data/radiosender.json");
+}
+
+//JSONArray currentWeatherJSON;
+//String currentWeatherText;
+//int currentWeatherIcon;
+//int currentTemperature;
+//int todayWeatherRainProbDay;
+//int todayWeatherRainProbNight;
+//int todayMaxTemp;
+//int todayMinTemp;
+
+//JSONObject dailyForecastJSON;
+//JSONArray dailyForecast;
+//int[] dailyMaxTemp;
+//int[] dailyMinTemp;
+//int[] dailyRainProbNight;
+//int[] dailyRainProbDay;
+
+//JSONObject hourlyForecastJSON;
+//JSONArray hourlyForecast;
+//int[] day1tempArray;
+//int[] day2tempArray;
+//int[] day3tempArray;
+//int[] day4tempArray;
+//int[] day5tempArray;
+
+void getWeather() {
+  
+  location = "Stuttgart";
+  refreshMin = minute();
+  refreshHour = hour();
+  
+  currentWeatherJSON = loadJSONArray("current_weather.json");
+  dailyForecastJSON = loadJSONObject("weather_forecast_5days.json");
+  dailyForecast = dailyForecastJSON.getJSONArray("DailyForecasts");
+  hourlyForecastJSON = loadJSONObject("3_hour_forecast.json");
+  hourlyForecast = hourlyForecastJSON.getJSONArray("list");
+  
+  // Array für maxTemp pro Tag
+  for (int i = 0; i<dailyForecast.size(); i++) {
+    dailyMaxTemp[i] = dailyForecast.getJSONObject(i).getJSONObject("Temperature").getJSONObject("Maximum").getInt("Value");
+  }
+  // Array für minTemp pro Tag
+  for (int i = 0; i<dailyForecast.size(); i++) {
+    dailyMinTemp[i] = dailyForecast.getJSONObject(i).getJSONObject("Temperature").getJSONObject("Minimum").getInt("Value");
+  }
+  // Array für rainProbNight pro Tag
+  for (int i = 0; i<dailyForecast.size(); i++) {
+    dailyRainProbNight[i] = dailyForecast.getJSONObject(i).getJSONObject("Night").getInt("RainProbability");
+  }
+  // Array für rainProbDay pro Tag
+  for (int i = 0; i<dailyForecast.size(); i++) {
+    dailyRainProbDay[i] = dailyForecast.getJSONObject(i).getJSONObject("Day").getInt("RainProbability");
+  }
+  int n = 0;
+  // Array für Temperatur an Tag 1
+  for (int i = 0; i<8;i++) {
+    day1tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    n++;
+  }
+  n = 0;
+  // Array für Temperatur an Tag 2
+  for (int i = 8; i<16;i++) {
+    day2tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    n++;
+  }
+  n = 0;
+  // Array für Temperatur an Tag 3
+  for (int i = 16; i<24;i++) {
+    day3tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    n++;
+  }
+  n = 0;
+  // Array für Temperatur an Tag 4
+  for (int i = 24; i<32;i++) {
+    day4tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    n++;
+  }
+  n = 0;
+  // Array für Temperatur an Tag 5
+  for (int i = 32; i<40;i++) {
+    day5tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
+    n++;
+  }
+  
+  currentWeatherText = currentWeatherJSON.getJSONObject(0).getString("WeatherText");
+  currentWeatherIconInt = currentWeatherJSON.getJSONObject(0).getInt("WeatherIcon");
+  currentWeatherIcon = loadShape("data/weather_icons/weatherIcon_"+currentWeatherIconInt+".svg");
+  currentTemperature = currentWeatherJSON.getJSONObject(0).getJSONObject("Temperature").getJSONObject("Metric").getInt("Value");
+  todayWeatherRainProbDay = dailyRainProbDay[0];
+  todayWeatherRainProbNight = dailyRainProbNight[0];
+  todayMaxTemp = dailyMaxTemp[0];
+  todayMinTemp = dailyMinTemp[0];
+  println(currentWeatherText + " - Icon " + currentWeatherIcon + " - " + currentTemperature +"°C");
+  //printArray(day5tempArray);
+
 }
