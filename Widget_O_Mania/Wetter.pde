@@ -12,6 +12,8 @@ class Wetter{
   
   void wetterForecastDisplay() {
     pushStyle();
+    refreshButton = new IconButton(x+wetterMax.breite-40,y+15,30,30,refreshIcon);
+    refreshButton.displayNoBG();
     //Current Weather
     textFont(SFproThin_128);
     fill(255);
@@ -50,6 +52,7 @@ class Wetter{
     textSize(28);
     rectMode(CORNERS);
     text(forecastHeadline,x+620,y+110,x+1100,y+310);
+    lastUpdateText(x+620,y+230);
     pushStyle();
     rectMode(CORNER);
     noStroke();

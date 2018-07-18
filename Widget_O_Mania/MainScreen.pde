@@ -2,7 +2,7 @@ void MainScreen() {
  if (!init) {
 //=============Setup Wecker=====================
  wecker = new Widget(50,40,width/2-75,height/2-60,"Uhr");
- weckerMax = new Widget(50,40,width-100,height-200,"Uhr"); 
+ weckerMax = new Widget(50,40,width-100,height-240,"Uhr"); 
  weckerMin = new Widget(50,height-150,width/2-75,100,"Uhr");
  
  maxButtonWecker = new IconButton(wecker.x+15,wecker.y+15,30,30, maxIcon,minIcon,1);
@@ -18,7 +18,7 @@ void MainScreen() {
  
   //=============Setup Radio=====================
  radio = new Widget(50,height/2+30,width/2-75,height/2-70,"Radio");
- radioMax = new Widget(50,40,width-100,height-200,"Radio");
+ radioMax = new Widget(50,40,width-100,height-240,"Radio");
  radioMin = new Widget(50,height-150,width/2-75,100,"Radio");
  
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
@@ -30,7 +30,7 @@ void MainScreen() {
  
    //=============Setup Wetter=====================
  wetter = new Widget(width/2+25,40,width/2-75,height-80,"Wetter");
- wetterMax = new Widget(50,40,width-100,height-200,"Wetter");
+ wetterMax = new Widget(50,40,width-100,height-240,"Wetter");
  wetterMin = new Widget(50,height-150,width/2-75,100,"Wetter");
  
  maxButtonWetter = new IconButton(wetter.x+15,wetter.y+15,30,30, maxIcon, minIcon,3);

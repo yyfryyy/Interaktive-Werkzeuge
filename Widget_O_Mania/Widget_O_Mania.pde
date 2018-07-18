@@ -9,7 +9,7 @@ AudioPlayer alarmPlayer;
 AudioMetaData meta;
 AudioOutput out;
 
-boolean useRealData = true;
+boolean useRealData = false;
 
 JSONArray currentWeatherJSON;
 String currentWeatherText;
@@ -325,7 +325,11 @@ void mouseReleased() {
   maxButtonWeckerSmall.clicked("changeScreen");
   maxButtonRadioSmall.clicked("changeScreen");
   minButtonWetter.clicked("changeScreen");
+  if (wetterForecast.refreshButton != null) {
+  wetterForecast.refreshButton.clicked("refresh");
+  }
   wetterForecast.clicked();
+
   }
 }
 
