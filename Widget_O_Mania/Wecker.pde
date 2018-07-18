@@ -123,11 +123,14 @@ class Wecker{
       remainMin--;
     }
     if (remainHour <= 0) {
-      remainHour += 23;
+      remainHour += 24;
     }
     if (weckerHour > uhr.std && weckerHour<24) {
       remainHour--;
     }
+    if (remainHour == 24) {
+      remainHour = 23;
+    } 
     pushStyle();
     fill(255);
     textFont(SFproLight_128);

@@ -63,6 +63,9 @@ class Button {
       if (function == "snooze") {
         snooze();
       }
+      if (function == "refresh") {
+        getWeather();
+      }
     }
   }
   

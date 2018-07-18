@@ -7,15 +7,16 @@ void WetterScreen() {
  
    initWetter = true;
  } 
-  
+  // Wetter
  wetterMax.display();
  minButtonWetter.displayNoBG();
+ wetterForecast.wetterForecastDisplay();
  
- 
+ // Uhr
  weckerMin.display();
  maxButtonWeckerSmall.displayNoBG();
  
- 
+ // Radio
  radioMin.display();
  maxButtonRadioSmall.displayNoBG();
 }

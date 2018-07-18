@@ -9,6 +9,8 @@ AudioPlayer alarmPlayer;
 AudioMetaData meta;
 AudioOutput out;
 
+boolean useRealData = true;
+
 JSONArray currentWeatherJSON;
 String currentWeatherText;
 int currentWeatherIconInt;
@@ -31,6 +33,10 @@ int[] dailyMaxTemp = new int[5];
 int[] dailyMinTemp = new int[5];
 int[] dailyRainProbNight = new int[5];
 int[] dailyRainProbDay = new int[5];
+int[] dailyIconInt = new int[5];
+PShape[] dailyIcons = new PShape[5];
+String[] dailyForecastDayName = new String[5];
+String forecastHeadline;
 
 JSONObject hourlyForecastJSON;
 JSONArray hourlyForecast;
@@ -83,6 +89,7 @@ PShape noFavIcon;
 PShape mutedIcon;
 PShape fullVolumeIcon;
 PShape halfVolumeIcon;
+PShape refreshIcon;
 
 boolean init;
 boolean initRadio;
@@ -124,6 +131,7 @@ Radio radioSteuerung;
 Uhr uhr;
 
 Wetter wetterMain;
+Wetter wetterForecast;
 
 Wecker weckerMain;
 int weckerHour = 12;
@@ -133,11 +141,11 @@ int weckerMinute = 0;
 String accuapikey = "YvoL1FuxVLloTYlOvfjUanQMCIGyxZnC";
 String locationkey = "167220";
 String currentConditionURL = "http://dataservice.accuweather.com/currentconditions/v1/"+locationkey+"?apikey="+accuapikey+"&language=de&details=false";
-
+String dailyForecastURL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/167220?apikey=YvoL1FuxVLloTYlOvfjUanQMCIGyxZnC&language=de&details=true&metric=true";
 
 // 3 Hour Forecast 5 Days OpenWeatherMap API
 String openweatherapikey = "be1173a9306197e365ab025aab244d1e";
-String hourForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Stuttgart,de&unity=metric&APPID=be1173a9306197e365ab025aab244d1e";
+String hourForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Stuttgart,de&units=metric&APPID=be1173a9306197e365ab025aab244d1e";
 
 void setup() {
  fullScreen();
@@ -194,6 +202,8 @@ void setup() {
  
  clock = loadShape("clock.svg");
  
+ refreshIcon = loadShape("refresh.svg");
+ 
  //=============Setup Wecker=====================
  wecker = new Widget(50,40,width/2-75,height/2-60,"Uhr");
  weckerMax = new Widget(50,40,width-100,height-200,"Uhr"); 
@@ -229,6 +239,7 @@ void setup() {
  minButtonWetter = new IconButton(wetterMax.x+15,wetterMax.y+15,30,30, minIcon,maxIcon,0);
  
  wetterMain = new Wetter(wetter.x,wetter.y);
+ wetterForecast = new Wetter(wetterMax.x, wetterMax.y);
  
  waterDropIcon = loadShape("data/weather_icons/waterdrop_icon.svg");
  dayIcon = loadShape("data/weather_icons/weatherIcon_1.svg");
@@ -295,6 +306,7 @@ void mouseReleased() {
     else if (alarmIsSet && alarmKlingelt) {
     weckerMain.schlummern.clicked("snooze");
     }
+  wetterMain.refreshButton.clicked("refresh");
   }
   // Wecker
   if (screenNo == 1) {
@@ -313,6 +325,7 @@ void mouseReleased() {
   maxButtonWeckerSmall.clicked("changeScreen");
   maxButtonRadioSmall.clicked("changeScreen");
   minButtonWetter.clicked("changeScreen");
+  wetterForecast.clicked();
   }
 }
 
@@ -387,11 +400,17 @@ void getWeather() {
   location = "Stuttgart";
   refreshMin = minute();
   refreshHour = hour();
-  
+  if (!useRealData) {
   currentWeatherJSON = loadJSONArray("current_weather.json");
   dailyForecastJSON = loadJSONObject("weather_forecast_5days.json");
-  dailyForecast = dailyForecastJSON.getJSONArray("DailyForecasts");
   hourlyForecastJSON = loadJSONObject("3_hour_forecast.json");
+  }
+  else {
+  currentWeatherJSON = loadJSONArray(currentConditionURL);
+  dailyForecastJSON = loadJSONObject(dailyForecastURL);
+  hourlyForecastJSON = loadJSONObject(hourForecastURL);
+  }
+  dailyForecast = dailyForecastJSON.getJSONArray("DailyForecasts");
   hourlyForecast = hourlyForecastJSON.getJSONArray("list");
   
   // Array für maxTemp pro Tag
@@ -410,6 +429,24 @@ void getWeather() {
   for (int i = 0; i<dailyForecast.size(); i++) {
     dailyRainProbDay[i] = dailyForecast.getJSONObject(i).getJSONObject("Day").getInt("RainProbability");
   }
+  // Array für IconInt pro Tag
+  for (int i = 0; i<dailyForecast.size(); i++) {
+    dailyIconInt[i] = dailyForecast.getJSONObject(i).getJSONObject("Day").getInt("Icon");
+  }
+  
+  for (int i=0; i<dailyForecast.size(); i++) {
+    Date pdate = new Date();
+    String day = dailyForecast.getJSONObject(i).getString("Date");
+    try {
+      pdate = new SimpleDateFormat("yyyy-MM-dd").parse(day);
+    }
+    catch (Exception e) {
+    }
+    
+    dailyForecastDayName[i] = new SimpleDateFormat("EEE").format(pdate);
+    
+  }
+  
   int n = 0;
   // Array für Temperatur an Tag 1
   for (int i = 0; i<8;i++) {
@@ -457,7 +494,10 @@ void getWeather() {
   todayWeatherRainProbNight = dailyRainProbNight[0];
   todayMaxTemp = dailyMaxTemp[0];
   todayMinTemp = dailyMinTemp[0];
-  println(currentWeatherText + " - Icon " + currentWeatherIcon + " - " + currentTemperature +"°C");
-  printArray(daytempTime);
-
+  forecastHeadline = dailyForecastJSON.getJSONObject("Headline").getString("Text");;
+  //println(currentWeatherText + " - Icon " + currentWeatherIcon + " - " + currentTemperature +"°C");
+  //printArray(daytempTime);
+  //println(forecastHeadline);
+  //printArray(dailyForecastDayName);
+  println(dailyIconInt);
 }
