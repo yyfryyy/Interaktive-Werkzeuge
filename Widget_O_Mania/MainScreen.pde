@@ -41,6 +41,9 @@ void MainScreen() {
  
  //==============================================
    init = true;
+   initWetter = false;
+   initRadio = false;
+   initWecker = false;
  } 
  
  

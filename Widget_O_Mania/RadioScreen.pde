@@ -5,10 +5,13 @@ void RadioScreen() {
    maxButtonWeckerSmall = new IconButton(weckerMin.x+15,weckerMin.y+15,30,30, maxIcon,minIcon,1);
    turnOnAlarmMin = new OnOffButton(weckerMin.x+555,weckerMin.y+25);
    
+   radioSteuerung = new Radio(radioMax.x+300,radio.y+110);
+   
    wetterMin = new Widget(width/2+0,height-180,width/2-50,130,"Wetter");
    wetterSmall = new Wetter(wetterMin.x,wetterMin.y);
    maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
    
+   init = false;
    initWetter = false;
    initWecker = false;
    initRadio = true;
@@ -16,6 +19,8 @@ void RadioScreen() {
   
   //============Draw Radio=======================
  radioMax.display();
+ radioSteuerung.steuerungMain();
+ radioSteuerung.showCover(237,85);
  minButtonRadio.displayNoBG();
  //==============================================
  

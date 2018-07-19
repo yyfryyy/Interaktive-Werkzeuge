@@ -92,7 +92,7 @@ class Uhr {
     text(uhrzeit,x_+20,y_);
     textFont(SFproUltraLight_128);
     textSize(40);
-    text(nf(sec,2),x_+230,y_-28);
+    text(nf(sec,2),x_+textWidth(uhrzeit)+120,y_-28);
     textSize(36);
     text(weckerHour+":"+nf(weckerMinute,2),x_+390,y_);
     popStyle();
@@ -103,6 +103,7 @@ class Uhr {
     pushMatrix();
     pushStyle();
     translate(x,y-40);
+    updateClock();
     fill(255);
     stroke(0);
     ellipse(0,0,radius*2,radius*2);

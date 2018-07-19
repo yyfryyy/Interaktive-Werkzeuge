@@ -11,6 +11,7 @@ void WeckerScreen() {
    uhrMax = new Uhr(weckerMax.x+500,weckerMax.y-100+weckerMax.hoehe/2,125);
    weckerMain = new Wecker(wecker.x+950,wecker.y+330);
    
+   init = false;
    initWetter = false;
    initRadio = false;
    initWecker = true;

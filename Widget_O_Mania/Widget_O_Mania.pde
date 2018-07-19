@@ -2,12 +2,14 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import ddf.minim.*;
 import ddf.minim.signals.*;
+import ddf.minim.analysis.*;
 
 Minim minim;
 AudioPlayer player;
 AudioPlayer alarmPlayer;
 AudioMetaData meta;
 AudioOutput out;
+FFT fft;
 
 boolean useRealData = false;
 
@@ -60,6 +62,7 @@ int songIndex;
 int senderIndex;
 boolean isPlaying;
 boolean muted;
+PImage cover;
 
 PFont SFproBold_128;
 PFont SFproLight_128;
@@ -179,7 +182,9 @@ void setup() {
  
  alarmPlayer = minim.loadFile("Atom - Atom-Alarm-Sirene.mp3");
  player = minim.loadFile(song);
+ fft = new FFT(player.bufferSize(), player.sampleRate());
  meta = player.getMetaData();
+ cover = loadImage(meta.title()+".jpg");
  println(radioName);
  println("Song: " + meta.title());
  println("Artist: " + meta.author());
@@ -375,6 +380,13 @@ void mouseReleased() {
   maxButtonWeckerSmall.clicked("changeScreen");
   minButtonRadio.clicked("changeScreen");
   maxButtonWetterSmall.clicked("changeScreen");
+  
+  radioSteuerung.playButton.clicked("play/pause");
+  radioSteuerung.forwardButton.clicked("forward");
+  radioSteuerung.backwardButton.clicked("backward");
+  radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
+  radioSteuerung.favButton.clicked("setFav");
+  
   if (turnOnAlarmMin != null) {
   turnOnAlarmMin.clicked("toggleAlarm");
   }

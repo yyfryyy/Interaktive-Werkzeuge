@@ -6,7 +6,6 @@ class Radio{
   String interpret;
   String radioName;
   String album;
-
   
   ToggleButton playButton;
   IconButton forwardButton;
@@ -58,6 +57,32 @@ class Radio{
     songInfoSmall();
   }
   
+  void showCover(int x_,int y_) {
+    pushStyle();
+    if (isPlaying) {
+      fft.forward(player.mix);
+      noStroke();
+      fill(255,map(fft.getBand(1),0,200,10,50));
+      //println("Size: "+fft.specSize());
+      for (float n = 1; n>0.8; n-=0.025) {
+        float rad = n;
+      beginShape();
+      for (int i = 0; i<200; i+=4) {
+      float angle = map(i,0,200,0,TWO_PI);
+      float freq = fft.getBand(i)*10;
+      freq = map(freq,0,200,150,250);
+      freq = constrain(freq,150,200);
+      curveVertex((sin(angle)*freq)*rad+x_+140,(cos(angle)*freq)*rad+y_+150);
+      }      
+      endShape(CLOSE);
+      }
+      //ellipse(x_,y_,map(freq,0,fft.specSize(),100,200),map(freq,0,fft.specSize(),100,200));
+    }
+    popStyle();
+    image(cover,x_,y_,300,300);
+    
+  }
+  
   void songInfoMain() {
     
     radioName = sender.getString("name");
@@ -86,6 +111,7 @@ class Radio{
     songtitle = meta.title();
     interpret = meta.author();
     album = meta.album();
+    
     
     pushStyle();
     fill(255);

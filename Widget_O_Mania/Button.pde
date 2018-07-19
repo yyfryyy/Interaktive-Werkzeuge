@@ -105,6 +105,7 @@ class Button {
     song = playlist.getString(songIndex);
     player = minim.loadFile(song);
     meta = player.getMetaData();
+    cover = loadImage(meta.title()+".jpg");
     if (radioSteuerung.playButton.active) {
     player.play();
     }
@@ -123,7 +124,8 @@ class Button {
     song = playlist.getString(songIndex);
     player = minim.loadFile(song);
     meta = player.getMetaData();
-    if (radioSteuerung.playButton.active && radioSteuerungSmall.playButton.active) {
+    cover = loadImage(meta.title()+".jpg");
+    if (radioSteuerung.playButton.active) {
     player.play();
     }
   }
