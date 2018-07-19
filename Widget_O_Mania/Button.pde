@@ -132,15 +132,15 @@ class Button {
   
   void muteUnmute() {
     if (!muted) {
-      oldVolume = radioSteuerung.volumeSlider.pixelVolume;
-      radioSteuerung.volumeSlider.pixelVolume = 0;
-      radioSteuerungSmall.volumeSlider.pixelVolume = 0;
+      oldVolume = pixelVolume;
+      pixelVolume = 0;
+      pixelVolume = 0;
       player.mute();
       muted = true;
     }
     else if (muted) {
-      radioSteuerung.volumeSlider.pixelVolume = oldVolume;
-      radioSteuerungSmall.volumeSlider.pixelVolume = oldVolume;
+      pixelVolume = oldVolume;
+      pixelVolume = oldVolume;
       player.unmute();
       muted = false;
     }

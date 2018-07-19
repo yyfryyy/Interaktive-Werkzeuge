@@ -6,6 +6,7 @@ class Radio{
   String interpret;
   String radioName;
   String album;
+  float noiseOffset;
   
   ToggleButton playButton;
   IconButton forwardButton;
@@ -31,8 +32,11 @@ class Radio{
     else {
     playButton.active = false;
     }
+    
     playButton.display();
-
+    if (isPlaying && !playButton.hovered) {
+    playAnimation(x,y);
+    }
     forwardButton.displayNoBG();
     backwardButton.displayNoBG();
     favButton.display();
@@ -40,6 +44,18 @@ class Radio{
     songInfoMain();
   }
   
+  void playAnimation(int x_, int y_) {
+    pushStyle();
+    rectMode(CORNER);
+    noStroke();
+    fill(50);
+    ellipse(x_+35,y_+35,50,50);
+    fill(220);  
+    rect(x_+25,y_+49,7,-map(noise(noiseOffset),0,1,0,40));
+    rect(x_+25+14,y_+49,7,-map(noise(noiseOffset+1000),0,1,0,40));
+    noiseOffset+=0.08;
+    popStyle();
+  }
     
   void steuerungSmall() {
     if (isPlaying) {
@@ -49,7 +65,9 @@ class Radio{
     playButton.active = false;
     }
     playButton.display();
-
+    if (isPlaying && !playButton.hovered) {
+    playAnimation(x,y);
+    }
     forwardButton.displayNoBG();
     backwardButton.displayNoBG();
     favButton.display();
@@ -95,13 +113,13 @@ class Radio{
     textAlign(CENTER);
     textFont(SFproBold_128);
     textSize(72);
-    text(radioName,x+40,y-110);
+    text(radioName,x+35,y-110);
     textFont(SFproSemiBold_128);
     textSize(22);
-    text(songtitle,x+40,y-60);
+    text(songtitle,x+35,y-60);
     textFont(SFproLight_128);
     textSize(18);
-    text(interpret + " - " + album, x+40,y-35);
+    text(interpret + " - " + album, x+35,y-35);
     popStyle();
   }
   
@@ -251,7 +269,6 @@ class ToggleButton extends Button {
     int x;
     int y;
     int len;
-    float pixelVolume;
     boolean hovered;
     VolumeIcon volumeIcon;
     

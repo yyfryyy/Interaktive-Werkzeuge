@@ -11,6 +11,24 @@ AudioMetaData meta;
 AudioOutput out;
 FFT fft;
 
+// ___            ________  ________  ___  ___  _________  ___  ___  ________   ________     
+//|\  \          |\   __  \|\   ____\|\  \|\  \|\___   ___\\  \|\  \|\   ___  \|\   ____\    
+//\ \  \         \ \  \|\  \ \  \___|\ \  \\\  \|___ \  \_\ \  \\\  \ \  \\ \  \ \  \___|    
+// \ \  \         \ \   __  \ \  \    \ \   __  \   \ \  \ \ \  \\\  \ \  \\ \  \ \  \  ___  
+//  \ \__\         \ \  \ \  \ \  \____\ \  \ \  \   \ \  \ \ \  \\\  \ \  \\ \  \ \  \|\  \ 
+//   \|__|          \ \__\ \__\ \_______\ \__\ \__\   \ \__\ \ \_______\ \__\\ \__\ \_______\
+//       ___         \|__|\|__|\|_______|\|__|\|__|    \|__|  \|_______|\|__| \|__|\|_______|
+//      |\__\                                                                                
+//      \|__|                                                                                
+                                                        
+// Wenn useRealData = true benutzt der Sketch echte Wetterdaten der Accuweather API,
+// andernfalls werden JSON Files im data-Ordner ausgelesen.
+// Pro aktualisierung werden 2 Abrufe benötigt, ich habe maximal 60 Abrufe pro Tag zu verfügung.
+// Sollte das Programm nicht starten sind die Abrufe aufgebraucht und es müssen die lokalen JSONs
+// ausgelesen werden.
+// Und falls Vollbild komisch aussieht bzw. kein MacBook benutzt wird, dann einfach fullScreen()
+// auskommentieren und size() benutzen.
+
 boolean useRealData = false;
 
 JSONArray currentWeatherJSON;
@@ -76,6 +94,7 @@ PFont Quartz_128;
 int screenNo = 0;
 float realVolume = 0.75;
 float oldVolume;
+float pixelVolume;
 
 PImage clockIconWhite;
 PImage clockIconDark;
@@ -162,7 +181,7 @@ String hourForecastURL = "http://api.openweathermap.org/data/2.5/forecast?q=Stut
 
 void setup() {
  fullScreen();
- //size(800,600);
+ //size(1440,900);
  pixelDensity(displayDensity());
  //textMode(SHAPE);
  //frame.setResizable(true);
@@ -286,7 +305,7 @@ void draw() {
  background(map(noise(frameCount*0.5+10000),0,1,0,200),map(2*noise(frameCount*0.5+10000),0,1,0,200),map(noise(frameCount*0.5+10000),0,1,0,200));
  }
  //println(frameRate);
- text("Fps: "+ frameRate,20,20);
+ //text("Fps: "+ frameRate,20,20);
  uhr.updateClock();
  player.setGain(map(realVolume,0,1,-45,0));
 
@@ -304,7 +323,7 @@ void draw() {
    WetterScreen();
    break;
  }
- mousePos();
+ //mousePos();
 }
 
 void mouseReleased() {
@@ -570,7 +589,7 @@ if (weckerMain.zeitEingabeMinAktiv) {
 void mousePos() {
 fill(255,0,0);
 textSize(14);
-text(mouseX+"x"+mouseY,mouseX,mouseY);
+text(mouseX+"x"+mouseY,mouseX-100,mouseY-100);
 }
 
 void mouseWheel(MouseEvent event) {

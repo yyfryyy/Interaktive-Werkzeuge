@@ -94,7 +94,7 @@ class Uhr {
     textSize(40);
     text(nf(sec,2),x_+textWidth(uhrzeit)+120,y_-28);
     textSize(36);
-    text(weckerHour+":"+nf(weckerMinute,2),x_+390,y_);
+    text(nf(weckerHour,2)+":"+nf(weckerMinute,2),x_+390,y_);
     popStyle();
   }
   

@@ -133,16 +133,20 @@ class Wecker{
   }
   
   void alarmKlingeln() {
-    if (weckerHour != uhr.std || weckerMinute != uhr.min && alarmKlingelt || !alarmIsOn) {
+    //if (weckerHour != uhr.std || (weckerMinute-1 != uhr.min || weckerMinute != uhr.min )&& alarmKlingelt || !alarmIsOn) {
+    //  alarmPlayer.pause();
+    //  alarmPlayer.rewind();
+    //  alarmKlingelt = false;
+    //}
+    if (weckerHour == uhr.std && (weckerMinute == uhr.min || weckerMinute-1 == uhr.min) && alarmIsOn) {
+      alarmPlayer.play();
+      alarmKlingelt = true;
+    }
+    else {
       alarmPlayer.pause();
       alarmPlayer.rewind();
       alarmKlingelt = false;
     }
-    if (weckerHour == uhr.std && weckerMinute == uhr.min && alarmIsOn) {
-      alarmPlayer.play();
-      alarmKlingelt = true;
-    }
-
   }
   
   void showRemainingTime() {

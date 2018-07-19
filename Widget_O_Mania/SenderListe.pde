@@ -39,7 +39,7 @@ class SenderListe{
     pushStyle();
     rectMode(CORNER);
     noStroke();
-    fill(255,30);
+    fill(255,5);
     rect(x,y,breite,hoehe);
     stroke(100);
     line(x,y,x+breite,y);
