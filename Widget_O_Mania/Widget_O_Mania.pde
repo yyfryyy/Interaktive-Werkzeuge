@@ -90,6 +90,7 @@ PShape mutedIcon;
 PShape fullVolumeIcon;
 PShape halfVolumeIcon;
 PShape refreshIcon;
+PShape weckerIcon;
 
 boolean init;
 boolean initRadio;
@@ -124,14 +125,18 @@ IconButton minButtonWecker;
 IconButton minButtonRadio;
 IconButton minButtonWetter;
 
+OnOffButton turnOnAlarmMin;
+
 switchButton uhrSwitch;
 
 Radio radioSteuerung;
+Radio radioSteuerungSmall;
 
 Uhr uhr;
 
 Wetter wetterMain;
 Wetter wetterForecast;
+Wetter wetterSmall;
 
 Wecker weckerMain;
 int weckerHour = 12;
@@ -204,6 +209,8 @@ void setup() {
  
  refreshIcon = loadShape("refresh.svg");
  
+ weckerIcon = loadShape("stopwatch.svg");
+ 
  //=============Setup Wecker=====================
  wecker = new Widget(50,40,width/2-75,height/2-60,"Uhr");
  weckerMax = new Widget(50,40,width-100,height-200,"Uhr"); 
@@ -227,6 +234,7 @@ void setup() {
  minButtonRadio = new IconButton(radioMax.x+15,radioMax.y+15,30,30, minIcon,maxIcon,0);
  
  radioSteuerung = new Radio(200,200);
+ radioSteuerungSmall = new Radio(200,200);
  //==============================================
  
    //=============Setup Wetter=====================
@@ -306,6 +314,20 @@ void mouseReleased() {
     else if (alarmIsSet && alarmKlingelt) {
     weckerMain.schlummern.clicked("snooze");
     }
+  if (weckerMain.isHovered("hour") && !alarmIsSet) {
+    weckerMain.zeitEingabeHourAktiv = ! weckerMain.zeitEingabeHourAktiv;
+    if (weckerMain.zeitEingabeHourAktiv) {
+      weckerMain.zeitEingabeMinAktiv = false;
+    }
+  } 
+  if (weckerMain.isHovered("minute") && !alarmIsSet) {
+    weckerMain.zeitEingabeMinAktiv = ! weckerMain.zeitEingabeMinAktiv;
+    if (weckerMain.zeitEingabeMinAktiv) {
+      weckerMain.zeitEingabeHourAktiv = false;
+    }
+  }  
+    
+    
   wetterMain.refreshButton.clicked("refresh");
   }
   // Wecker
@@ -313,12 +335,21 @@ void mouseReleased() {
   minButtonWecker.clicked("changeScreen");
   maxButtonRadioSmall.clicked("changeScreen");
   maxButtonWetterSmall.clicked("changeScreen");
+  
+  radioSteuerungSmall.playButton.clicked("play/pause");
+  radioSteuerungSmall.forwardButton.clicked("forward");
+  radioSteuerungSmall.backwardButton.clicked("backward");
+  radioSteuerungSmall.volumeSlider.volumeIcon.clicked("mute/unmute");
+  radioSteuerungSmall.favButton.clicked("setFav");
   }
   // Radio
   if (screenNo == 2) {
   maxButtonWeckerSmall.clicked("changeScreen");
   minButtonRadio.clicked("changeScreen");
   maxButtonWetterSmall.clicked("changeScreen");
+  if (turnOnAlarmMin != null) {
+  turnOnAlarmMin.clicked("toggleAlarm");
+  }
   }
   // Wetter
     if (screenNo == 3) {
@@ -329,11 +360,107 @@ void mouseReleased() {
   wetterForecast.refreshButton.clicked("refresh");
   }
   wetterForecast.clicked();
-
+  if (turnOnAlarmMin != null) {
+  turnOnAlarmMin.clicked("toggleAlarm");
+  }
+  radioSteuerungSmall.playButton.clicked("play/pause");
+  radioSteuerungSmall.forwardButton.clicked("forward");
+  radioSteuerungSmall.backwardButton.clicked("backward");
+  radioSteuerungSmall.volumeSlider.volumeIcon.clicked("mute/unmute");
+  radioSteuerungSmall.favButton.clicked("setFav");
   }
 }
 
-
+void keyTyped() {
+if (weckerMain.zeitEingabeHourAktiv) {
+    switch(key) {
+    case BACKSPACE:
+      weckerMain.hourText = weckerMain.hourText.substring(0, max(0, weckerMain.hourText.length()-1));
+      break;
+    case ENTER:
+    case CODED: // Zeilenumbrueche und Tabulatoren etc. ausfiltern
+    case RETURN:
+    case TAB:
+      if (Integer.parseInt(weckerMain.hourText) < 24) {
+      weckerHour = Integer.parseInt(weckerMain.hourText);
+      weckerMain.zeitEingabeHourAktiv = false;
+      break;
+      }
+      if (Integer.parseInt(weckerMain.hourText) == 24) {
+      weckerMain.hourText = "00";
+      weckerHour = 0;
+      weckerMain.zeitEingabeHourAktiv = false;
+      break;
+      }
+      
+      // do nothing;
+      // diese Variante ist nur sinnvoll wenn darauf ein default case folgt
+      
+        
+    case '0':
+    case '1':
+    case '2':
+      if (weckerMain.hourText.length() < 2) { // max. 12 Zeichen lang
+        weckerMain.hourText = weckerMain.hourText + key;
+        break;
+      }
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+      if (weckerMain.hourText.length() > 0 && weckerMain.hourText.length() < 2) { // max. 12 Zeichen lang
+        weckerMain.hourText = weckerMain.hourText + key;
+      }
+    }
+  }
+if (weckerMain.zeitEingabeMinAktiv) {
+    switch(key) {
+    case BACKSPACE:
+      weckerMain.minuteText = weckerMain.minuteText.substring(0, max(0, weckerMain.minuteText.length()-1));
+      break;
+    case ENTER:
+    case CODED: // Zeilenumbrueche und Tabulatoren etc. ausfiltern
+    case RETURN:
+    case TAB:
+      if (Integer.parseInt(weckerMain.minuteText) < 60) {
+      weckerMinute = Integer.parseInt(weckerMain.minuteText);
+      weckerMain.zeitEingabeMinAktiv = false;
+      break;
+      }
+      if (Integer.parseInt(weckerMain.minuteText) == 60) {
+      weckerMain.minuteText = "00";
+      weckerMinute = 0;
+      weckerMain.zeitEingabeMinAktiv = false;
+      break;
+      }
+      
+      // do nothing;
+      // diese Variante ist nur sinnvoll wenn darauf ein default case folgt
+      
+        
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+      if (weckerMain.minuteText.length() < 2) { // max. 12 Zeichen lang
+        weckerMain.minuteText = weckerMain.minuteText + key;
+        break;
+      }
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+      if (weckerMain.minuteText.length() > 0 && weckerMain.minuteText.length() < 2) { // max. 12 Zeichen lang
+        weckerMain.minuteText = weckerMain.minuteText + key;
+      }
+    }
+  }
+}
 
 
 void mousePos() {

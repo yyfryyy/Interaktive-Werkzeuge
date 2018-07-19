@@ -123,7 +123,7 @@ class Button {
     song = playlist.getString(songIndex);
     player = minim.loadFile(song);
     meta = player.getMetaData();
-    if (radioSteuerung.playButton.active) {
+    if (radioSteuerung.playButton.active && radioSteuerungSmall.playButton.active) {
     player.play();
     }
   }
@@ -132,11 +132,13 @@ class Button {
     if (!muted) {
       oldVolume = radioSteuerung.volumeSlider.pixelVolume;
       radioSteuerung.volumeSlider.pixelVolume = 0;
+      radioSteuerungSmall.volumeSlider.pixelVolume = 0;
       player.mute();
       muted = true;
     }
     else if (muted) {
       radioSteuerung.volumeSlider.pixelVolume = oldVolume;
+      radioSteuerungSmall.volumeSlider.pixelVolume = oldVolume;
       player.unmute();
       muted = false;
     }

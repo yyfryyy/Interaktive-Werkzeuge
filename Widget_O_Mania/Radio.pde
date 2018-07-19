@@ -25,17 +25,40 @@ class Radio{
     volumeSlider = new VolumeSlider(x+220,y+35, 100);
   }
   
-  void steuerungSmall() {
-    
+  void steuerungMain() {
+    if (isPlaying) {
+    playButton.active = true;
+    }
+    else {
+    playButton.active = false;
+    }
     playButton.display();
+
     forwardButton.displayNoBG();
     backwardButton.displayNoBG();
     favButton.display();
     volumeSlider.display();
-    songInfo();
+    songInfoMain();
   }
   
-  void songInfo() {
+    
+  void steuerungSmall() {
+    if (isPlaying) {
+    playButton.active = true;
+    }
+    else {
+    playButton.active = false;
+    }
+    playButton.display();
+
+    forwardButton.displayNoBG();
+    backwardButton.displayNoBG();
+    favButton.display();
+    volumeSlider.display();
+    songInfoSmall();
+  }
+  
+  void songInfoMain() {
     
     radioName = sender.getString("name");
     songtitle = meta.title();
@@ -54,6 +77,28 @@ class Radio{
     textFont(SFproLight_128);
     textSize(18);
     text(interpret + " - " + album, x+40,y-35);
+    popStyle();
+  }
+  
+  void songInfoSmall() {
+    
+    radioName = sender.getString("name");
+    songtitle = meta.title();
+    interpret = meta.author();
+    album = meta.album();
+    
+    pushStyle();
+    fill(255);
+    textAlign(CENTER);
+    textFont(SFproBold_128);
+    textSize(24);
+    text(radioName,x+35,y-10);
+    //textFont(SFproSemiBold_128);
+    //textSize(22);
+    //text(songtitle,x+40,y-60);
+    //textFont(SFproLight_128);
+    //textSize(18);
+    //text(interpret + " - " + album, x+40,y-35);
     popStyle();
   }
   

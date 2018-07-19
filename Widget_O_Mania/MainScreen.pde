@@ -11,7 +11,7 @@ void MainScreen() {
  
  
  uhr = new Uhr(wecker.x+200,wecker.y+35+wecker.hoehe/2,125);
- uhrSwitch = new switchButton(wecker.x+10,wecker.y+70,70,30,clock,"09:00");
+ uhrSwitch = new switchButton(wecker.x+15,wecker.y+70,70,30,clock,"09:00");
  
  weckerMain = new Wecker(wecker.x+485,wecker.y+200);
  //==============================================
@@ -58,6 +58,7 @@ void MainScreen() {
   uhrSwitch.display();
   
   weckerMain.setWecker();
+  weckerMain.weckerIconDisplay(weckerMain.x-60,weckerMain.y-120);
  //==============================================
  
  
@@ -70,7 +71,7 @@ void MainScreen() {
  
  
  maxButtonRadio.displayNoBG();
- radioSteuerung.steuerungSmall();
+ radioSteuerung.steuerungMain();
  //==============================================
  
   //============Draw Wetter=======================

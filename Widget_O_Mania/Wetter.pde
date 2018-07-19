@@ -144,7 +144,24 @@ class Wetter{
     popStyle();
   }
   
-  
+  void weatherSmall() {
+    pushStyle();
+    textFont(SFproThin_128);
+    fill(255);
+    noStroke();
+    textSize(48);
+    text(location,x+160,y+67);
+    //textFont(SFproLight_128);
+    textSize(18);
+    text(nf(day(),2)+". "+uhr.monatsname+" "+year(),x+160,y+93);
+    textFont(SFproUltraLight_128);
+    textSize(80);
+    textAlign(CENTER);
+    text(currentTemperature+"°C",x+460,y+90);
+    currentWeatherIcon.disableStyle();
+    shape(currentWeatherIcon,x+560,y+10,80,80);
+    popStyle();
+  }
   
   void lastUpdateText(int x_, int y_) {
     pushStyle();

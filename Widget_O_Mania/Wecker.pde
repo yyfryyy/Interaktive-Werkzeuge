@@ -15,6 +15,8 @@ class Wecker{
   TextButton editAlarm;
   TextButton schlummern;
   OnOffButton turnOnAlarm;
+  boolean zeitEingabeHourAktiv = false;
+  boolean zeitEingabeMinAktiv = false;
   
   Wecker(int x_, int y_) {
     x = x_;
@@ -22,7 +24,7 @@ class Wecker{
     setAlarm = new TextButton(x-60,y+80,120,40,"SET ALARM");
     editAlarm = new TextButton(x-60,y+40,120,40,"EDIT ALARM");
     schlummern = new TextButton(x-80,y+40,160,40,"SCHLUMMERN");
-    turnOnAlarm = new OnOffButton(x+45,y-120);
+    turnOnAlarm = new OnOffButton(x+35,y-120);
   }
   
   boolean isHovered(String area) {
@@ -33,8 +35,13 @@ class Wecker{
       }
     }
     if ( area == "minute") {
-      if (mouseX>x-+5 && mouseX<x+800 && mouseY>y-80 && mouseY<y+40) {
+      if (mouseX>x-+5 && mouseX<x+80 && mouseY>y-80 && mouseY<y+40) {
         return true;
+    }
+    if (area == "all") {
+      if (mouseX>x-80 && mouseX<x+80 && mouseY>y-80 && mouseY<y+40) {
+        return true;
+      }
     }
     }
   return false;
@@ -63,7 +70,10 @@ class Wecker{
       textSize(55);
       //Grosse Anzeige
       fill(255);
+      hourText =numberToString(weckerHour);
+      minuteText = numberToString(weckerMinute);
       text(numberToString(weckerHour)+":"+numberToString(weckerMinute),x,y);
+      
     }
     
     else {
@@ -85,13 +95,24 @@ class Wecker{
     textSize(55);
     //Grosse Anzeige
     fill(255);
-    text(numberToString(weckerHour)+":"+numberToString(weckerMinute),x,y);
+    //text(numberToString(weckerHour)+":"+numberToString(weckerMinute),x,y);
+    text(hourText+":"+minuteText,x,y);
     //text oben
     fill(200);
     textSize(30);
     text(numberToString(prevHour)+" : "+numberToString(prevMin),x-1,y-50);
     // text unten
     text(numberToString(nextHour)+" : "+numberToString(nextMin),x-1,y+35);
+    if (zeitEingabeHourAktiv) {
+      noStroke();
+      fill(255);
+      rect(x+textWidth(hourText)-50,y+5,2,-50);
+    }
+    if (zeitEingabeMinAktiv) {
+      noStroke();
+      fill(255);
+      rect(x+textWidth(minuteText)+50,y+5,2,-50);
+    }
     }    
     popStyle();
   }
@@ -172,6 +193,25 @@ class Wecker{
     return num;
     
   }
+  
+  void weckerIconDisplay(int x_, int y_) {
+    pushStyle();
+    pushMatrix();
+    weckerIcon.disableStyle();
+    if (alarmKlingelt) {
+      fill(map(noise(frameCount*0.5+10000),0,1,80,255),0,0);
+    }
+    else if (alarmIsOn) {
+      fill(0,200,0);
+    }
+    else {
+    fill(255);
+    }
 
+    shape(weckerIcon,x_,y_,30,30);
+    popMatrix();
+    popStyle();
+  }
+  
 
 }

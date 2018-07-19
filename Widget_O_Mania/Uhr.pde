@@ -47,17 +47,35 @@ class Uhr {
   void digital() {
     pushStyle();
     
-    uhrzeit = nf(std,2)+":"+nf(min,2)+":"+nf(sec,2);
+    uhrzeit = nf(std,2)+":"+nf(min,2);
     textAlign(CENTER);
-    textFont(Quartz_128);
-    textSize(80);
-    fill(40);
-    text("00:00:00",x,y);
+    textFont(SFproUltraLight_128);
+    textSize(128);
+    //fill(40);
+    //text("00:00:00",x,y);
     fill(255);
     text(uhrzeit,x,y);
     popStyle();
     //println(uhrzeit);
     showDate(x,y+40);
+  }
+  
+  void smallDigital(int x_, int y_) {
+    pushStyle();    
+    uhrzeit = nf(std,2)+":"+nf(min,2);
+    textAlign(LEFT);
+    textFont(SFproThin_128);
+    textSize(80);
+    //fill(40);
+    //text("00:00:00",x,y);
+    fill(255);
+    text(uhrzeit,x_+20,y_);
+    textFont(SFproUltraLight_128);
+    textSize(40);
+    text(nf(sec,2),x_+230,y_-28);
+    textSize(36);
+    text(weckerHour+":"+nf(weckerMinute,2),x_+390,y_);
+    popStyle();
   }
   
   void analog() {
