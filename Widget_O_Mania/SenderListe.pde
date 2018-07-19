@@ -6,10 +6,11 @@ class SenderListe{
   int y;
   int breite;
   int hoehe;
-  String text;
+  String text = "+";
   boolean feedback;
   boolean setTimer;
   int time;
+  int senderIndex=0;
   
   SenderListe(int x_, int y_, int breite_, int hoehe_) {
    x = x_;
@@ -34,6 +35,46 @@ class SenderListe{
     }
   }
   
+  void senderListeDisplay() {
+    pushStyle();
+    rectMode(CORNER);
+    noStroke();
+    fill(255,30);
+    rect(x,y,breite,hoehe);
+    stroke(100);
+    line(x,y,x+breite,y);
+    line(x,y+hoehe,x+breite,y+hoehe);
+    noStroke();
+    fill(255);
+    textFont(SFproLight_128);
+    textSize(22);
+    textAlign(LEFT);
+    text(senderIndex+".",x+10,y-12+hoehe);
+    textAlign(RIGHT);
+    textFont(SFproSemiBold_128);
+    textSize(22);
+    if (isHovering()) {
+      fill(200);
+    }
+    else {
+      fill(255);
+    }
+    text(text,x+breite-10,y-12+hoehe);
+   
+    if (eingabeAktiv) {
+      noStroke();
+      fill(255);
+      if (blink) {
+        rect(x+breite-5,y+33,1,-28);
+      }
+      if (frameCount%15 ==0) {
+        blink = !blink;
+      }
+    }
+
+    popStyle();
+  }
+  
   void sucheDisplay() {
     pushStyle();
     rectMode(CORNER);
@@ -55,6 +96,8 @@ class SenderListe{
         blink = !blink;
       }
     }
+    
+    
     if (feedback) {
     feedBack();
     }

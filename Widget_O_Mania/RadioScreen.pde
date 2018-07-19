@@ -23,6 +23,12 @@ void RadioScreen() {
  radioSteuerung.steuerungMain();
  radioSteuerung.showCover(237,85);
  senderSuche.sucheDisplay();
+ 
+for (int i=0; i<10;i++) {
+   senderListe[i].senderListeDisplay();
+ }
+ 
+ 
  minButtonRadio.displayNoBG();
  //==============================================
  

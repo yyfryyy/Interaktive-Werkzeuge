@@ -107,20 +107,20 @@ class Wecker{
     if (zeitEingabeHourAktiv) {
       noStroke();
       fill(255);
-      if (blink) {
+      if (!blink) {
       rect(x+textWidth(hourText)-50,y+5,2,-50);
       }
-      if (frameCount%30 ==0) {
+      if (frameCount%15 ==0) {
       blink = !blink;
       }
     }
     if (zeitEingabeMinAktiv) {
       noStroke();
       fill(255);
-      if (blink) {
+      if (!blink) {
       rect(x+textWidth(minuteText)+50,y+5,2,-50);
       }
-      if (frameCount%30 ==0) {
+      if (frameCount%15 ==0) {
       blink = !blink;
       }
     }

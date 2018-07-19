@@ -136,6 +136,7 @@ Radio radioSteuerung;
 Radio radioSteuerungSmall;
 
 SenderListe senderSuche;
+SenderListe[] senderListe = new SenderListe[10];
 
 Uhr uhr;
 Uhr uhrMax;
@@ -238,6 +239,14 @@ void setup() {
  radioMax = new Widget(50,40,width-100,height-200,"Radio");
  radioMin = new Widget(50,height-150,width/2-75,100,"Radio");
  senderSuche = new SenderListe(radioMax.x+900, radioMax.y+120,300,40,"Suchen");
+ for (int i=0; i<10;i++) {
+   senderListe[i] = new SenderListe(radioMax.x+900, radioMax.y+180+i*40,300, 40);
+   senderListe[i].senderIndex = i+1;
+ }
+ senderListe[0].text = "SWR 3";
+ senderListe[1].text = "Hitradio Ohr";
+ senderListe[2].text = "BADEN.FM";
+ senderListe[3].text = "Rock FM";
  
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
  maxButtonRadioSmall = new IconButton(radioMin.x+15,radioMin.y+15,30,30, maxIcon,minIcon,2);
@@ -390,9 +399,17 @@ void mouseReleased() {
   radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
   radioSteuerung.favButton.clicked("setFav");
   if (senderSuche != null){
-  if (senderSuche.isHovering()) {
-    senderSuche.eingabeAktiv = !senderSuche.eingabeAktiv;
+    if (senderSuche.isHovering()) {
+      senderSuche.eingabeAktiv = !senderSuche.eingabeAktiv;
+    }
   }
+  for (int i=0; i<10;i++) {
+    if(senderListe[i].isHovering()) {
+      for (int n = 0; n<10;n++) {
+        senderListe[n].eingabeAktiv = false;
+      }
+      senderListe[i].eingabeAktiv = !senderListe[i].eingabeAktiv;
+    }
   }
   
   if (turnOnAlarmMin != null) {
@@ -420,6 +437,26 @@ void mouseReleased() {
 }
 
 void keyTyped() {
+for (int i=0; i<10;i++) {
+  if(senderListe[i].eingabeAktiv) {
+      switch(key) {
+      case BACKSPACE:
+          senderListe[i].text = senderListe[i].text.substring(0, max(0, senderListe[i].text.length()-1));
+          break;
+      case ENTER:
+      case CODED:
+      case RETURN:
+      case TAB:
+          senderListe[i].eingabeAktiv = false;
+          break;
+      default:
+        if(senderListe[i].text.length() < 20) {
+          senderListe[i].text += key;
+    }
+  }
+  }
+}
+  
 if (senderSuche.eingabeAktiv) {
   switch(key) {
   case BACKSPACE:
