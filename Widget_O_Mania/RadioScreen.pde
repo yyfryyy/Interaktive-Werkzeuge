@@ -7,6 +7,7 @@ void RadioScreen() {
    
    radioSteuerung = new Radio(radioMax.x+300,radio.y+110);
    
+   
    wetterMin = new Widget(width/2+0,height-180,width/2-50,130,"Wetter");
    wetterSmall = new Wetter(wetterMin.x,wetterMin.y);
    maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
@@ -21,6 +22,7 @@ void RadioScreen() {
  radioMax.display();
  radioSteuerung.steuerungMain();
  radioSteuerung.showCover(237,85);
+ senderSuche.sucheDisplay();
  minButtonRadio.displayNoBG();
  //==============================================
  

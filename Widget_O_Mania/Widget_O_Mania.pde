@@ -135,6 +135,8 @@ switchButton uhrSwitch;
 Radio radioSteuerung;
 Radio radioSteuerungSmall;
 
+SenderListe senderSuche;
+
 Uhr uhr;
 Uhr uhrMax;
 
@@ -235,6 +237,7 @@ void setup() {
  radio = new Widget(50,height/2+30,width/2-75,height/2-70,"Radio");
  radioMax = new Widget(50,40,width-100,height-200,"Radio");
  radioMin = new Widget(50,height-150,width/2-75,100,"Radio");
+ senderSuche = new SenderListe(radioMax.x+900, radioMax.y+120,300,40,"Suchen");
  
  maxButtonRadio = new IconButton(radio.x+15,radio.y+15,30,30, maxIcon, minIcon,2);
  maxButtonRadioSmall = new IconButton(radioMin.x+15,radioMin.y+15,30,30, maxIcon,minIcon,2);
@@ -386,6 +389,11 @@ void mouseReleased() {
   radioSteuerung.backwardButton.clicked("backward");
   radioSteuerung.volumeSlider.volumeIcon.clicked("mute/unmute");
   radioSteuerung.favButton.clicked("setFav");
+  if (senderSuche != null){
+  if (senderSuche.isHovering()) {
+    senderSuche.eingabeAktiv = !senderSuche.eingabeAktiv;
+  }
+  }
   
   if (turnOnAlarmMin != null) {
   turnOnAlarmMin.clicked("toggleAlarm");
@@ -412,6 +420,25 @@ void mouseReleased() {
 }
 
 void keyTyped() {
+if (senderSuche.eingabeAktiv) {
+  switch(key) {
+  case BACKSPACE:
+      senderSuche.text = senderSuche.text.substring(0, max(0, senderSuche.text.length()-1));
+      break;
+  case ENTER:
+  case CODED:
+  case RETURN:
+  case TAB:
+      senderSuche.text = "Suchen";
+      senderSuche.feedback = true;
+      senderSuche.eingabeAktiv = false;
+      break;
+  default:
+    if(senderSuche.text.length() < 20) {
+      senderSuche.text += key;
+    }
+  }
+}
 if (weckerMain.zeitEingabeHourAktiv) {
     switch(key) {
     case BACKSPACE:
