@@ -8,12 +8,25 @@ void WeckerScreen() {
    wetterSmall = new Wetter(wetterMin.x,wetterMin.y);
    maxButtonWetterSmall = new IconButton(wetterMin.x+15,wetterMin.y+15,30,30, maxIcon,minIcon,3);
    
+   uhrMax = new Uhr(weckerMax.x+500,weckerMax.y-100+weckerMax.hoehe/2,125);
+   weckerMain = new Wecker(wecker.x+950,wecker.y+330);
+   
    initWetter = false;
    initRadio = false;
    initWecker = true;
  } 
  
  weckerMax.display();
+ if (uhrSwitch.active) {
+  uhr.digital(1.5);
+  }
+  else {
+  uhr.analog(1.5);
+  }
+  uhrSwitch.display();
+  
+  weckerMain.setWecker();
+  weckerMain.weckerIconDisplay(weckerMain.x-60,weckerMain.y-120);
  minButtonWecker.displayNoBG();
  
  

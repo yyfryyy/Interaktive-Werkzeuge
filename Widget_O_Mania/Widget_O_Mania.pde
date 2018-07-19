@@ -133,12 +133,14 @@ Radio radioSteuerung;
 Radio radioSteuerungSmall;
 
 Uhr uhr;
+Uhr uhrMax;
 
 Wetter wetterMain;
 Wetter wetterForecast;
 Wetter wetterSmall;
 
 Wecker weckerMain;
+
 int weckerHour = 12;
 int weckerMinute = 0;
 
@@ -336,6 +338,32 @@ void mouseReleased() {
   maxButtonRadioSmall.clicked("changeScreen");
   maxButtonWetterSmall.clicked("changeScreen");
   
+  uhrSwitch.clicked("switchState");
+  
+    weckerMain.turnOnAlarm.clicked("toggleAlarm");
+    if (!alarmIsSet) {
+    weckerMain.setAlarm.clicked("weckerSet");
+    }
+    else if (alarmIsSet && !alarmKlingelt) {
+    weckerMain.editAlarm.clicked("weckerSet");
+    }
+    else if (alarmIsSet && alarmKlingelt) {
+    weckerMain.schlummern.clicked("snooze");
+    }
+  if (weckerMain.isHovered("hour") && !alarmIsSet) {
+    weckerMain.zeitEingabeHourAktiv = ! weckerMain.zeitEingabeHourAktiv;
+    if (weckerMain.zeitEingabeHourAktiv) {
+      weckerMain.zeitEingabeMinAktiv = false;
+    }
+  } 
+  if (weckerMain.isHovered("minute") && !alarmIsSet) {
+    weckerMain.zeitEingabeMinAktiv = ! weckerMain.zeitEingabeMinAktiv;
+    if (weckerMain.zeitEingabeMinAktiv) {
+      weckerMain.zeitEingabeHourAktiv = false;
+    }
+  }  
+    
+
   radioSteuerungSmall.playButton.clicked("play/pause");
   radioSteuerungSmall.forwardButton.clicked("forward");
   radioSteuerungSmall.backwardButton.clicked("backward");
@@ -492,11 +520,6 @@ void mouseWheel(MouseEvent event) {
   }
 }
 
-void keyPressed () {
- if(key == BACKSPACE) {
-   screenNo = 0;
- } 
-}
 
 void dispose() {
   saveJSONObject(radioSenderJSON, "data/radiosender.json");
@@ -612,7 +635,7 @@ void getWeather() {
   }
   n = 0;
   // Array für Temperatur an Tag 5
-  for (int i = 32; i<40;i++) {
+  for (int i = 32; i<hourlyForecast.size();i++) {
     day5tempArray[n] = hourlyForecast.getJSONObject(i).getJSONObject("main").getInt("temp");
     n++;
   }

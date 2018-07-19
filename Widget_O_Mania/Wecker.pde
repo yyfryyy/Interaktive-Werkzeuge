@@ -17,6 +17,7 @@ class Wecker{
   OnOffButton turnOnAlarm;
   boolean zeitEingabeHourAktiv = false;
   boolean zeitEingabeMinAktiv = false;
+  boolean blink;
   
   Wecker(int x_, int y_) {
     x = x_;
@@ -106,12 +107,22 @@ class Wecker{
     if (zeitEingabeHourAktiv) {
       noStroke();
       fill(255);
+      if (blink) {
       rect(x+textWidth(hourText)-50,y+5,2,-50);
+      }
+      if (frameCount%30 ==0) {
+      blink = !blink;
+      }
     }
     if (zeitEingabeMinAktiv) {
       noStroke();
       fill(255);
+      if (blink) {
       rect(x+textWidth(minuteText)+50,y+5,2,-50);
+      }
+      if (frameCount%30 ==0) {
+      blink = !blink;
+      }
     }
     }    
     popStyle();
